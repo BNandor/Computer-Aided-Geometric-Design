@@ -48,6 +48,7 @@ namespace cagd {
     GLboolean insert(GLdouble alpha,GLuint max_order_of_derivatives,const ColumnMatrix<DCoordinate3>& _data,GLdouble scale,Color4 color=Color4(0.5,0.5,0.5,0));
     GLboolean continueExisting(GLuint id,Direction direction,GLdouble alpha, GLuint max_order_derivative,GLdouble scale );
     GLuint join(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection,GLdouble scale);
+    GLuint merge(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection);
     GLboolean updatePosition(int arcindex,int pointindex,DCoordinate3 newcoord);
     GLboolean updateArcForRendering( ArcAttributes*);
     void renderAll(GLuint max_order_of_derivatives);

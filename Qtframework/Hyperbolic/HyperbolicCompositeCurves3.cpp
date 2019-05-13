@@ -130,7 +130,7 @@ namespace cagd{
   GLboolean HyperbolicCompositeCurve3::updatePosition(int arcindex,int pointindex,DCoordinate3 newcoord){
     if(arcindex < 0 || arcindex>=_arc_count)return GL_FALSE;
     if(pointindex < 0 || pointindex>3)return GL_FALSE;
-    DCoordinate3 diff = -(*(_arcs[arcindex]->arc))[pointindex] + newcoord;
+    DCoordinate3 diff = newcoord - (*(_arcs[arcindex]->arc))[pointindex];
     switch (pointindex) {
       case 0:{
           if(_arcs[arcindex]->previous){
@@ -162,10 +162,63 @@ namespace cagd{
           (*((_arcs[arcindex])->arc))[3]=newcoord;
           if(!updateArcForRendering(_arcs[arcindex]))return GL_FALSE;
         }  break;
+      case 2:{
+          if(_arcs[arcindex]->next){
+            if((*((_arcs[arcindex]->next)->arc))[3]==(*((_arcs[arcindex])->arc))[3]){
+              (*((_arcs[arcindex]->next)->arc))[2]-=diff;
+            }else{
+               (*((_arcs[arcindex]->next)->arc))[1]-=diff;
+            }
+            if(!updateArcForRendering(_arcs[arcindex]->next))return GL_FALSE;
+          }
+          (*((_arcs[arcindex])->arc))[2]=newcoord;
+          if(!updateArcForRendering(_arcs[arcindex]))return GL_FALSE;
+        }  break;
+      case 1:{
+          if(_arcs[arcindex]->previous){
+            if((*((_arcs[arcindex]->previous)->arc))[3]==(*((_arcs[arcindex])->arc))[0]){
+              (*((_arcs[arcindex]->previous)->arc))[2]-=diff;
+            }else{
+               (*((_arcs[arcindex]->previous)->arc))[1]-=diff;
+            }
+            if(!updateArcForRendering(_arcs[arcindex]->previous))return GL_FALSE;
+          }
+          (*((_arcs[arcindex])->arc))[1]=newcoord;
+          if(!updateArcForRendering(_arcs[arcindex]))return GL_FALSE;
+        }  break;
 
     }
     return GL_TRUE;
   }
+
+  GLuint HyperbolicCompositeCurve3::merge(GLuint firstId, GLuint secondId,Direction firstDirection,Direction secondDirection){
+    if(firstId < 0 || firstId >= _arc_count  )return GL_FALSE;
+    if(secondId < 0 || secondId >= _arc_count  )return GL_FALSE;
+
+      DCoordinate3 newpos;
+      DCoordinate3 p2,q1;
+
+      p2 = (firstDirection == Right) ?(*((_arcs[firstId])->arc))[2]: (*((_arcs[firstId])->arc))[1];
+      q1 = (secondDirection == Left) ?(*((_arcs[secondId])->arc))[1]: (*((_arcs[secondId])->arc))[2];
+      newpos = (0.5)*(p2+q1);
+
+      if(firstDirection == Right){
+        (*((_arcs[firstId])->arc))[3]=newpos;
+        }else{
+        (*((_arcs[firstId])->arc))[0]=newpos;
+      }
+      if(secondDirection == Right){
+        (*((_arcs[secondId])->arc))[3]=newpos;
+        }else{
+        (*((_arcs[secondId])->arc))[0]=newpos;
+      }
+      if(!updateArcForRendering(_arcs[firstId]))return GL_FALSE;
+      if(!updateArcForRendering(_arcs[secondId]))return GL_FALSE;
+
+     //(firstDirection == Right)?(*((_arcs[firstId])->arc))[3]:(*((_arcs[firstId])->arc))[0] = newpos;
+     //(secondDirection == Left)?(*((_arcs[secondId])->arc))[0]:(*((_arcs[secondId])->arc))[3] = newpos;
+  }
+
 void HyperbolicCompositeCurve3::renderAll(GLuint max_order_of_derivatives){
   for (int i=0;i<_arc_count;++i) {
     if(_arcs[i]->img){

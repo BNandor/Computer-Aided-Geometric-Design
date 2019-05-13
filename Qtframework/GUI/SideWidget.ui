@@ -360,13 +360,13 @@
      <item row="10" column="1">
       <widget class="QDoubleSpinBox" name="ArcAlphaSpinBox">
        <property name="minimum">
-        <double>0.010000000000000</double>
+        <double>1.500000000000000</double>
        </property>
        <property name="singleStep">
         <double>1.000000000000000</double>
        </property>
        <property name="value">
-        <double>0.100000000000000</double>
+        <double>1.500000000000000</double>
        </property>
       </widget>
      </item>
@@ -389,7 +389,7 @@
     <attribute name="title">
      <string>Arc</string>
     </attribute>
-    <widget class="QTabWidget" name="tabWidget_2">
+    <widget class="QTabWidget" name="mergetab">
      <property name="geometry">
       <rect>
        <x>0</x>
@@ -399,7 +399,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="arc_insert_tab">
       <attribute name="title">
@@ -1098,6 +1098,110 @@
        <property name="text">
         <string>Y</string>
        </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_3">
+      <attribute name="title">
+       <string>Merge</string>
+      </attribute>
+      <widget class="QLabel" name="label_30">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>111</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>First arc index</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_31">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>111</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Second arc index</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="ArcMergeFirstIndex">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>20</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="ArcMergeSecondIndex">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>40</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ArcMergeButton">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>80</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Merge</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="ArcMergeFirstDirection">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>20</y>
+         <width>79</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Right</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Left</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="ArcMergeSecondDirection">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>40</y>
+         <width>79</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Right</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Left</string>
+        </property>
+       </item>
       </widget>
      </widget>
     </widget>

@@ -110,6 +110,7 @@ namespace cagd
         void changeTransformX(double);
         void changeTransformY(double);
         void changeTransformZ(double);
+        void mergeArcs();
    private slots:
         void _animate();//Testing dynamic vertex buffer objects
     };

@@ -62,6 +62,8 @@ namespace cagd
         connect(_side_widget->ArcTransformX,SIGNAL(valueChanged(double)),_gl_widget,SLOT(changeTransformX(double)));
         connect(_side_widget->ArcTransformY,SIGNAL(valueChanged(double)),_gl_widget,SLOT(changeTransformY(double)));
         connect(_side_widget->ArcTransformZ,SIGNAL(valueChanged(double)),_gl_widget,SLOT(changeTransformZ(double)));
+
+        connect(_side_widget->ArcMergeButton, SIGNAL(clicked()),_gl_widget,SLOT(mergeArcs()));
     }
 
     //--------------------------------

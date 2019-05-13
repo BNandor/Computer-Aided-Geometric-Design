@@ -920,4 +920,14 @@ namespace cagd
       }
       updateGL();
     }
+
+    void GLWidget::mergeArcs(){
+      if(compositeCurve){
+          int firstIndex    = _sideWidget->ArcMergeFirstIndex->value();
+          int secondIndex    = _sideWidget->ArcMergeSecondIndex->value();
+          HyperbolicCompositeCurve3::Direction firstDirection = _sideWidget->ArcMergeFirstDirection->currentIndex() == 0 ?HyperbolicCompositeCurve3::Right:HyperbolicCompositeCurve3::Left;
+          HyperbolicCompositeCurve3::Direction secondDirection = _sideWidget->ArcMergeSecondDirection->currentIndex() == 0 ?HyperbolicCompositeCurve3::Right:HyperbolicCompositeCurve3::Left;
+          compositeCurve->merge(firstIndex,secondIndex,firstDirection,secondDirection);
+      }
+    }
 }
