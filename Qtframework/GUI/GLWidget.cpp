@@ -942,7 +942,11 @@ namespace cagd
     void GLWidget::insertPatch(){
       if(!compositePatch){
          compositePatch = new HyperbolicCompositePatch3(MAX_PATCH_COUNT);
+         patchMaterials[0]=MatFBEmerald;
+         patchMaterials[1]=MatFBGold;
+         patchMaterials[2]=MatFBBrass;
       }
+
       ColumnMatrix<DCoordinate3> coords(16);
       coords[0]=DCoordinate3(_sideWidget->PatchInsertCoord00X->value(),_sideWidget->PatchInsertCoord00Y->value(),_sideWidget->PatchInsertCoord00Z->value());
       coords[1]=DCoordinate3(_sideWidget->PatchInsertCoord01X->value(),_sideWidget->PatchInsertCoord01Y->value(),_sideWidget->PatchInsertCoord01Z->value());
@@ -961,11 +965,17 @@ namespace cagd
       coords[13]=DCoordinate3(_sideWidget->PatchInsertCoord31X->value(),_sideWidget->PatchInsertCoord31Y->value(),_sideWidget->PatchInsertCoord31Z->value());
       coords[14]=DCoordinate3(_sideWidget->PatchInsertCoord32X->value(),_sideWidget->PatchInsertCoord32Y->value(),_sideWidget->PatchInsertCoord32Z->value());
       coords[15]=DCoordinate3(_sideWidget->PatchInsertCoord33X->value(),_sideWidget->PatchInsertCoord33Y->value(),_sideWidget->PatchInsertCoord33Z->value());
-      if(compositePatch->insert(_sideWidget->PatchInsertAlphaSpinBox->value(),1,coords)){
+      if(compositePatch->insert(_sideWidget->PatchInsertAlphaSpinBox->value(),1,coords,patchMaterials[_sideWidget->PatchInsertMaterial->currentIndex()])){
           cout<<"inserting patch"<<endl;
         }else{
           cout<<"not inserting patch"<<endl;
         }
       updateGL();
+    }
+    void GLWidget::continuePatch(){
+      if(compositePatch){
+          compositePatch->continueExisting(_sideWidget->PatchContinueSpinBox->value(),(HyperbolicCompositePatch3::Direction)_sideWidget->PatchContinueDirection->currentIndex(),_sideWidget->PatchContinueAlpha->value(),
+                                           patchMaterials[_sideWidget->PatchContinueMaterial->currentIndex()]);
+      }
     }
 }

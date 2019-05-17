@@ -53,7 +53,7 @@ namespace cagd {
       default_derivatives_colour=Color4(0,0.5,0);
     }
     GLboolean insert(GLdouble alpha,GLuint max_order_of_derivatives,const ColumnMatrix<DCoordinate3>& _data,Material material=MatFBEmerald);
-    GLboolean continueExisting(GLuint id,Direction direction,GLdouble alpha);
+    GLboolean continueExisting(GLuint id,Direction direction,GLdouble alpha,Material material);
 //    GLuint join(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection,GLdouble scale);
 //    GLuint merge(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection);
 //    GLboolean updatePosition(int arcindex,int pointindex,DCoordinate3 newcoord);

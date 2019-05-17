@@ -1408,8 +1408,11 @@
          <height>23</height>
         </rect>
        </property>
+       <property name="singleStep">
+        <double>0.000000000000000</double>
+       </property>
        <property name="value">
-        <double>1.000000000000000</double>
+        <double>0.000000000000000</double>
        </property>
       </widget>
       <widget class="QDoubleSpinBox" name="PatchInsertCoord03Y">
@@ -1669,7 +1672,7 @@
         </rect>
        </property>
        <property name="value">
-        <double>2.000000000000000</double>
+        <double>3.000000000000000</double>
        </property>
       </widget>
       <widget class="QDoubleSpinBox" name="PatchInsertCoord22X">
@@ -1919,6 +1922,31 @@
         <double>3.000000000000000</double>
        </property>
       </widget>
+      <widget class="QComboBox" name="PatchInsertMaterial">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>70</y>
+         <width>79</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Emerald</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gold</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Brass</string>
+        </property>
+       </item>
+      </widget>
      </widget>
      <widget class="QWidget" name="arc_continue_tab_2">
       <attribute name="title">
@@ -1953,8 +1981,8 @@
       <widget class="QPushButton" name="PatchContinueButton">
        <property name="geometry">
         <rect>
-         <x>170</x>
-         <y>150</y>
+         <x>350</x>
+         <y>20</y>
          <width>80</width>
          <height>22</height>
         </rect>
@@ -1963,7 +1991,7 @@
         <string>Continue Arc</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="ArcContinueDirection_2">
+      <widget class="QComboBox" name="PatchContinueDirection">
        <property name="geometry">
         <rect>
          <x>170</x>
@@ -2050,6 +2078,44 @@
        </property>
        <property name="text">
         <string>Direction</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="PatchContinueMaterial">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>150</y>
+         <width>79</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Emerald</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Gold</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Brass</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_68">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>150</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Material</string>
        </property>
       </widget>
      </widget>

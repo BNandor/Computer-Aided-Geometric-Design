@@ -68,6 +68,7 @@ namespace cagd
       HomeWork currentHomework=CompositePatch;
       //Project
         //CompositeCurves
+         Material patchMaterials[3];
          HyperbolicCompositeCurve3 * compositeCurve;
         //CompositePatches
          HyperbolicCompositePatch3 * compositePatch;
