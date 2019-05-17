@@ -12,6 +12,7 @@
 #include "../Hyperbolic/HyperbolicPatch3.h"
 #include "../Cyclic/CyclicCurves3.h"
 #include "../Hyperbolic/HyperbolicCompositeCurves3.h"
+#include "../Hyperbolic/HyperbolicCompositePatch3.h"
 
 namespace cagd
 {
@@ -35,7 +36,7 @@ namespace cagd
         double      _trans_x, _trans_y, _trans_z;
 
         // your other declarations
-        enum HomeWork{ParametricCurve,ParametricSurface,DynamicVBO,HyperbolicArc3,TensorProductSurface3,CyclicCurve,CompositeCurve};
+        enum HomeWork{ParametricCurve,ParametricSurface,DynamicVBO,HyperbolicArc3,TensorProductSurface3,CyclicCurve,CompositeCurve,CompositePatch};
       ParametricCurve3* _pc;      
       GenericCurve3* _image_of_pc;
 
@@ -64,10 +65,12 @@ namespace cagd
       TriangulatedMesh3* hyperbolicPatch3InterpolationImage;
       RowMatrix<GenericCurve3*>* UISOLINES;
       RowMatrix<GenericCurve3*>* VISOLINES;
-      HomeWork currentHomework=CompositeCurve;
+      HomeWork currentHomework=CompositePatch;
       //Project
         //CompositeCurves
          HyperbolicCompositeCurve3 * compositeCurve;
+        //CompositePatches
+         HyperbolicCompositePatch3 * compositePatch;
       //eof mine
     public:
         // special and default constructor
@@ -103,14 +106,18 @@ namespace cagd
         void change_homework(int index);
         void change_ArcAlpha(double);
 
-        void insert_Arc();
-        void continue_Arc();
-        void join_Arcs();
+        void insertArc();
+        void continueArc();
+        void joinArcs();
         void changeTransformPointIndex(int);
         void changeTransformX(double);
         void changeTransformY(double);
-        void changeTransformZ(double);
+        void changeTransformZ(double);                
         void mergeArcs();
+
+        //Patches
+        void insertPatch();
+        void continuePatch();
    private slots:
         void _animate();//Testing dynamic vertex buffer objects
     };

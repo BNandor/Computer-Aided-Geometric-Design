@@ -13,12 +13,13 @@ using namespace std;
 
 #include <Core/Exceptions.h>
 #define MAX_CURVE_COUNT 20
+#define MAX_PATCH_COUNT 15
 namespace cagd
 {
     //--------------------------------
     // special and default constructor
     //--------------------------------
-    GLWidget::GLWidget(QWidget *parent, const QGLFormat &format): QGLWidget(format, parent),surfaces(5),curves(5),derivative_scale(0.3),compositeCurve(0)
+    GLWidget::GLWidget(QWidget *parent, const QGLFormat &format): QGLWidget(format, parent),surfaces(5),curves(5),derivative_scale(0.3),compositeCurve(0),compositePatch(0)
     {   //Parametric curve
 //      switch(currentHomework){
 //        case ParametricCurve:initialize_curves();break;
@@ -549,6 +550,11 @@ namespace cagd
                 compositeCurve->renderAll(0);
             }
         }
+        if(currentHomework == CompositePatch){
+            if(compositePatch){
+               compositePatch->renderAll();
+            }
+        }
         //EOF Testing dynamic vertex buffers
         // pops the current matrix stack, replacing the current matrix with the one below it on the stack,
         // i.e., the original model view matrix is restored
@@ -828,12 +834,14 @@ namespace cagd
         case 3:currentHomework = HyperbolicArc3;break;
         case 4:currentHomework = TensorProductSurface3;break;
         case 5:currentHomework = CyclicCurve;break;
+        case 6:currentHomework = CompositeCurve;break;
+        case 7:currentHomework = CompositePatch;break;
         }
       initializeGL();
       updateGL();
     }
 
-    void GLWidget::insert_Arc(){
+    void GLWidget::insertArc(){
       if(!compositeCurve){
           compositeCurve = new HyperbolicCompositeCurve3(MAX_CURVE_COUNT);
       }
@@ -846,7 +854,7 @@ namespace cagd
       compositeCurve->insert(_sideWidget->ArcInsertAlphaSpinBox->value(),2,coords,_sideWidget->ArcInsertScaleSpinBox->value(),color);
       updateGL();
     }
-    void GLWidget::continue_Arc(){
+    void GLWidget::continueArc(){
       if(compositeCurve){
           if(_sideWidget->ArcContinueDirection->currentIndex() == 0)
             compositeCurve->continueExisting(_sideWidget->ArcContinueSpinBox->value(),HyperbolicCompositeCurve3::Right,
@@ -857,7 +865,7 @@ namespace cagd
           updateGL();
       }
     }
-    void GLWidget::join_Arcs(){
+    void GLWidget::joinArcs(){
       if(compositeCurve){
           HyperbolicCompositeCurve3::Direction firstDirection;
           HyperbolicCompositeCurve3::Direction secondDirection;
@@ -929,5 +937,35 @@ namespace cagd
           HyperbolicCompositeCurve3::Direction secondDirection = _sideWidget->ArcMergeSecondDirection->currentIndex() == 0 ?HyperbolicCompositeCurve3::Right:HyperbolicCompositeCurve3::Left;
           compositeCurve->merge(firstIndex,secondIndex,firstDirection,secondDirection);
       }
+    }
+
+    void GLWidget::insertPatch(){
+      if(!compositePatch){
+         compositePatch = new HyperbolicCompositePatch3(MAX_PATCH_COUNT);
+      }
+      ColumnMatrix<DCoordinate3> coords(16);
+      coords[0]=DCoordinate3(_sideWidget->PatchInsertCoord00X->value(),_sideWidget->PatchInsertCoord00Y->value(),_sideWidget->PatchInsertCoord00Z->value());
+      coords[1]=DCoordinate3(_sideWidget->PatchInsertCoord01X->value(),_sideWidget->PatchInsertCoord01Y->value(),_sideWidget->PatchInsertCoord01Z->value());
+      coords[2]=DCoordinate3(_sideWidget->PatchInsertCoord02X->value(),_sideWidget->PatchInsertCoord02Y->value(),_sideWidget->PatchInsertCoord02Z->value());
+      coords[3]=DCoordinate3(_sideWidget->PatchInsertCoord03X->value(),_sideWidget->PatchInsertCoord03Y->value(),_sideWidget->PatchInsertCoord03Z->value());
+      coords[4]=DCoordinate3(_sideWidget->PatchInsertCoord10X->value(),_sideWidget->PatchInsertCoord10Y->value(),_sideWidget->PatchInsertCoord10Z->value());
+      coords[5]=DCoordinate3(_sideWidget->PatchInsertCoord11X->value(),_sideWidget->PatchInsertCoord11Y->value(),_sideWidget->PatchInsertCoord11Z->value());
+      coords[6]=DCoordinate3(_sideWidget->PatchInsertCoord12X->value(),_sideWidget->PatchInsertCoord12Y->value(),_sideWidget->PatchInsertCoord12Z->value());
+      coords[7]=DCoordinate3(_sideWidget->PatchInsertCoord13X->value(),_sideWidget->PatchInsertCoord13Y->value(),_sideWidget->PatchInsertCoord13Z->value());
+
+      coords[8]=DCoordinate3(_sideWidget->PatchInsertCoord20X->value(),_sideWidget->PatchInsertCoord20Y->value(),_sideWidget->PatchInsertCoord20Z->value());
+      coords[9]=DCoordinate3(_sideWidget->PatchInsertCoord21X->value(),_sideWidget->PatchInsertCoord21Y->value(),_sideWidget->PatchInsertCoord21Z->value());
+      coords[10]=DCoordinate3(_sideWidget->PatchInsertCoord22X->value(),_sideWidget->PatchInsertCoord22Y->value(),_sideWidget->PatchInsertCoord22Z->value());
+      coords[11]=DCoordinate3(_sideWidget->PatchInsertCoord23X->value(),_sideWidget->PatchInsertCoord23Y->value(),_sideWidget->PatchInsertCoord23Z->value());
+      coords[12]=DCoordinate3(_sideWidget->PatchInsertCoord30X->value(),_sideWidget->PatchInsertCoord30Y->value(),_sideWidget->PatchInsertCoord30Z->value());
+      coords[13]=DCoordinate3(_sideWidget->PatchInsertCoord31X->value(),_sideWidget->PatchInsertCoord31Y->value(),_sideWidget->PatchInsertCoord31Z->value());
+      coords[14]=DCoordinate3(_sideWidget->PatchInsertCoord32X->value(),_sideWidget->PatchInsertCoord32Y->value(),_sideWidget->PatchInsertCoord32Z->value());
+      coords[15]=DCoordinate3(_sideWidget->PatchInsertCoord33X->value(),_sideWidget->PatchInsertCoord33Y->value(),_sideWidget->PatchInsertCoord33Z->value());
+      if(compositePatch->insert(_sideWidget->PatchInsertAlphaSpinBox->value(),1,coords)){
+          cout<<"inserting patch"<<endl;
+        }else{
+          cout<<"not inserting patch"<<endl;
+        }
+      updateGL();
     }
 }

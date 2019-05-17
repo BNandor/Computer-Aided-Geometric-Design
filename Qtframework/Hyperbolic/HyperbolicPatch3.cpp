@@ -143,5 +143,7 @@ GLboolean HyperbolicPatch3::CalculatePartialDerivatives(
 
 void HyperbolicPatch3::setAlpha(GLdouble alpha){
   _alpha=alpha;
+  _u_max=_alpha;
+  _v_max=_alpha;
   updateConstants();
 }

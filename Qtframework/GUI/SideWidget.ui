@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>802</width>
-    <height>766</height>
+    <height>1085</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -341,6 +341,16 @@
          <string>CyclicCurve3</string>
         </property>
        </item>
+       <item>
+        <property name="text">
+         <string>CompositeArc</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>CompositePatch</string>
+        </property>
+       </item>
       </widget>
      </item>
      <item row="11" column="0">
@@ -379,11 +389,11 @@
      <x>0</x>
      <y>370</y>
      <width>471</width>
-     <height>371</height>
+     <height>711</height>
     </rect>
    </property>
    <property name="currentIndex">
-    <number>0</number>
+    <number>1</number>
    </property>
    <widget class="QWidget" name="arc_tab">
     <attribute name="title">
@@ -399,7 +409,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>4</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="arc_insert_tab">
       <attribute name="title">
@@ -1210,6 +1220,1244 @@
     <attribute name="title">
      <string>Surface</string>
     </attribute>
+    <widget class="QTabWidget" name="mergetab_2">
+     <property name="geometry">
+      <rect>
+       <x>0</x>
+       <y>0</y>
+       <width>461</width>
+       <height>671</height>
+      </rect>
+     </property>
+     <property name="currentIndex">
+      <number>1</number>
+     </property>
+     <widget class="QWidget" name="arc_insert_tab_2">
+      <attribute name="title">
+       <string>Insert</string>
+      </attribute>
+      <widget class="QPushButton" name="PatchInsertButton">
+       <property name="geometry">
+        <rect>
+         <x>360</x>
+         <y>10</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Insert Patch</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertAlphaSpinBox">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>10</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>5.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_32">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>10</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Alpha</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_34">
+       <property name="geometry">
+        <rect>
+         <x>0</x>
+         <y>70</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Coords</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord00X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>70</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>0.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord00Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>70</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord00Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>70</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord01X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>100</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord01Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>100</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord01Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>100</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord02X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>130</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord02Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>130</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord02Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>130</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord03X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>160</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord03Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>160</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>3.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord03Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>160</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_35">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>70</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Material</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord10X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>210</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord12Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>270</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>0.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord13X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>300</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord11Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>240</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord13Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>300</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>3.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord12X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>270</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord11X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>240</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord10Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>210</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord11Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>240</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord10Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>210</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord12Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>270</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord13Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>300</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord20X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>350</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord22Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>410</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>-1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord23X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>440</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord21Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>380</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord23Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>440</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord22X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>410</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord21X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>380</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord20Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>350</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord21Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>380</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord20Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>350</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord22Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>410</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord23Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>440</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord33Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>580</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>3.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord30X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>490</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>3.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord30Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>490</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>5.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord33Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>580</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord31Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>520</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>1.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord32X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>550</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>3.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord32Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>550</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>2.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord31Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>520</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord32Z">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>550</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+       <property name="value">
+        <double>0.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord30Y">
+       <property name="geometry">
+        <rect>
+         <x>150</x>
+         <y>490</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord33X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>580</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>3.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchInsertCoord31X">
+       <property name="geometry">
+        <rect>
+         <x>60</x>
+         <y>520</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>3.000000000000000</double>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="arc_continue_tab_2">
+      <attribute name="title">
+       <string>Continue</string>
+      </attribute>
+      <widget class="QSpinBox" name="PatchContinueSpinBox">
+       <property name="geometry">
+        <rect>
+         <x>200</x>
+         <y>20</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="maximum">
+        <number>99999</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_36">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Patch</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="PatchContinueButton">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>150</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Continue Arc</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="ArcContinueDirection_2">
+       <property name="geometry">
+        <rect>
+         <x>170</x>
+         <y>60</y>
+         <width>79</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>N</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>NE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>E</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>S</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SW</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>W</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>NW</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QDoubleSpinBox" name="PatchContinueAlpha">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>100</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>5.000000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_37">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Alpha</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_38">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Direction</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_4">
+      <attribute name="title">
+       <string>Join</string>
+      </attribute>
+      <widget class="QLabel" name="label_40">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>20</y>
+         <width>71</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>First index</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="ArcJoinFirstIndex_2">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>20</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_41">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>60</y>
+         <width>81</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Second index</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="ArcJoinSecondIndex_2">
+       <property name="geometry">
+        <rect>
+         <x>180</x>
+         <y>60</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <number>1</number>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_42">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>100</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Scale</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="ArcJoinScale_2">
+       <property name="geometry">
+        <rect>
+         <x>160</x>
+         <y>100</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="value">
+        <double>0.600000000000000</double>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ArcJoinButton_2">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>140</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Join</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="ArcJoinFirstDirection_2">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>20</y>
+         <width>79</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Right</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Left</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="ArcJoinSecondDirection_2">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>60</y>
+         <width>79</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Right</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Left</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QLabel" name="label_43">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>20</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Direction</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_44">
+       <property name="geometry">
+        <rect>
+         <x>270</x>
+         <y>60</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Direction</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_5">
+      <attribute name="title">
+       <string>Transform</string>
+      </attribute>
+      <widget class="QLabel" name="label_45">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Arc index</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="ArcTransformArcIndex_2">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>10</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_46">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>81</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Point Index</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="ArcTransformPointIndex_2">
+       <property name="geometry">
+        <rect>
+         <x>220</x>
+         <y>50</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_47">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>80</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>X</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="ArcTransformX_2">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>80</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.300000000000000</double>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="ArcTransformZ_2">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>140</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+       <property name="maximum">
+        <double>99.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.300000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_48">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>140</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Z</string>
+       </property>
+      </widget>
+      <widget class="QDoubleSpinBox" name="ArcTransformY_2">
+       <property name="geometry">
+        <rect>
+         <x>210</x>
+         <y>110</y>
+         <width>66</width>
+         <height>23</height>
+        </rect>
+       </property>
+       <property name="minimum">
+        <double>-99.000000000000000</double>
+       </property>
+       <property name="singleStep">
+        <double>0.300000000000000</double>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_49">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>110</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Y</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_6">
+      <attribute name="title">
+       <string>Merge</string>
+      </attribute>
+      <widget class="QLabel" name="label_50">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>20</y>
+         <width>111</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>First arc index</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_51">
+       <property name="geometry">
+        <rect>
+         <x>20</x>
+         <y>40</y>
+         <width>111</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Second arc index</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="ArcMergeFirstIndex_2">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>20</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="ArcMergeSecondIndex_2">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>40</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ArcMergeButton_2">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>80</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Merge</string>
+       </property>
+      </widget>
+      <widget class="QComboBox" name="ArcMergeFirstDirection_2">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>20</y>
+         <width>79</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Right</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Left</string>
+        </property>
+       </item>
+      </widget>
+      <widget class="QComboBox" name="ArcMergeSecondDirection_2">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>40</y>
+         <width>79</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>Right</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>Left</string>
+        </property>
+       </item>
+      </widget>
+     </widget>
+    </widget>
    </widget>
   </widget>
  </widget>

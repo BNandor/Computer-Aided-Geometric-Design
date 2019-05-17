@@ -309,17 +309,22 @@ GLboolean TensorProductSurface3::RenderData(GLenum render_mode) const{
 GLboolean TensorProductSurface3::UpdateVertexBufferObjectsOfData(GLenum usage_flag ){
   GLuint row = _data.GetRowCount();
   GLuint column = _data.GetColumnCount();
-  if (row == 0 || column==0)
+  if (row == 0 || column==0){
+      cerr<<"row,col=0"<<endl;
             return GL_FALSE;
+    }
   if (usage_flag != GL_STREAM_DRAW  && usage_flag != GL_STREAM_READ  && usage_flag != GL_STREAM_COPY
      && usage_flag != GL_DYNAMIC_DRAW && usage_flag != GL_DYNAMIC_READ && usage_flag != GL_DYNAMIC_COPY
       && usage_flag != GL_STATIC_DRAW  && usage_flag != GL_STATIC_READ  && usage_flag != GL_STATIC_COPY){
+        cerr<<"wrong usage flag"<<endl;
             return GL_FALSE;
     }
    DeleteVertexBufferObjectsOfData();
    glGenBuffers(1, &_vbo_data);
-   if (!_vbo_data)
+   if (!_vbo_data){
+       cerr<<"!vbo_data"<<endl;
             return GL_FALSE;
+   }
    glBindBuffer(GL_ARRAY_BUFFER, _vbo_data);
    glBufferData(GL_ARRAY_BUFFER, 2 * row * column * 3 * sizeof(GLfloat), 0, usage_flag);
    GLfloat *coordinate = (GLfloat*)glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
@@ -327,6 +332,7 @@ GLboolean TensorProductSurface3::UpdateVertexBufferObjectsOfData(GLenum usage_fl
    {
        glBindBuffer(GL_ARRAY_BUFFER, 0);
        DeleteVertexBufferObjectsOfData();
+       cerr<<"!coordinate"<<endl;
             return GL_FALSE;
    }
 
@@ -357,10 +363,12 @@ GLboolean TensorProductSurface3::UpdateVertexBufferObjectsOfData(GLenum usage_fl
            {
                glBindBuffer(GL_ARRAY_BUFFER, 0);
                DeleteVertexBufferObjectsOfData();
+               cerr<<"!unmapbuffer"<<endl;
                return GL_FALSE;
            }
 
    glBindBuffer(GL_ARRAY_BUFFER, 0);
+   return GL_TRUE;
 }
 
 TensorProductSurface3::~TensorProductSurface3()
@@ -385,8 +393,14 @@ RowMatrix<GenericCurve3*>* TensorProductSurface3::GenerateUIsoparametricLines(GL
           for (GLuint order = 0; order < maximum_order_of_derivatives+1; ++order)
           {
             (*((*result)[i]))(order, k) = pderivs(order,order);
-          }
+          }          
           v+=v_step;
+      }
+      for (GLuint order = 0; order < maximum_order_of_derivatives+1; ++order)
+      {
+          PartialDerivatives pderivs(maximum_order_of_derivatives);
+          CalculatePartialDerivatives(maximum_order_of_derivatives,u,_v_max,pderivs);
+        (*((*result)[i]))(order, div_point_count-1) = pderivs(order,order);
       }
   }
   return result;
@@ -412,6 +426,12 @@ RowMatrix<GenericCurve3*>* TensorProductSurface3::GenerateVIsoparametricLines(GL
             (*((*result)[i]))(order, k) = pderivs(order,0);
           }
           u+=u_step;
+      }
+      for (GLuint order = 0; order < maximum_order_of_derivatives+1; ++order)
+      {
+          PartialDerivatives pderivs(maximum_order_of_derivatives);
+          CalculatePartialDerivatives(maximum_order_of_derivatives,_u_max,v,pderivs);
+        (*((*result)[i]))(order, div_point_count-1) = pderivs(order,order);
       }
   }
   return result;

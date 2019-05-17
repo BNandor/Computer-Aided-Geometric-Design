@@ -85,7 +85,8 @@ HEADERS += \
     Core/TensorProductSurfaces3.h \
     Hyperbolic/HyperbolicPatch3.h \
     Cyclic/CyclicCurves3.h \
-    Hyperbolic/HyperbolicCompositeCurves3.h
+    Hyperbolic/HyperbolicCompositeCurves3.h \
+    Hyperbolic/HyperbolicCompositePatch3.h
 
 SOURCES += \
     GUI/GLWidget.cpp \
@@ -105,5 +106,6 @@ SOURCES += \
     Core/TensorProductSurfaces3.cpp \
     Hyperbolic/HyperbolicPatch3.cpp \
     Cyclic/CyclicCurve3.cpp \
-    Hyperbolic/HyperbolicCompositeCurves3.cpp
+    Hyperbolic/HyperbolicCompositeCurves3.cpp \
+    Hyperbolic/HyperbolicCompositePatch3.cpp
 

@@ -6,6 +6,7 @@ namespace cagd{
     if(arc)delete arc;
     if(img)delete img;
     if(color)delete color;   
+    if(derivatives_color)delete derivatives_color;
   }
   HyperbolicCompositeCurve3::ArcAttributes::ArcAttributes(const ArcAttributes & other){
     arc = new HyperbolicArc3(*other.arc);

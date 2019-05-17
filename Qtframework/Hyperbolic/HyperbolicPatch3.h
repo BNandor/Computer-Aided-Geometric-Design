@@ -33,6 +33,7 @@ public:
   HyperbolicPatch3(GLdouble alpha):TensorProductSurface3(0, alpha,0,alpha),_alpha(alpha){
     updateConstants();
   }
+  HyperbolicPatch3(const HyperbolicPatch3& other):TensorProductSurface3(other),_alpha(other._alpha){}
   virtual GLboolean UBlendingFunctionValues(
           GLdouble u_knot, RowMatrix<GLdouble>& blending_values) const;
 

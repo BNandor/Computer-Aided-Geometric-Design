@@ -54,9 +54,10 @@ namespace cagd
         connect(_side_widget->surfaceCombo,SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(change_surface(int)));
         connect(_side_widget->homeworkChooser,SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(change_homework(int)));
         connect(_side_widget->ArcAlphaSpinBox,SIGNAL(valueChanged(double)),_gl_widget,SLOT(change_ArcAlpha(double)));
-        connect(_side_widget->ArcInsertButton, SIGNAL(clicked()),_gl_widget,SLOT(insert_Arc()));
-        connect(_side_widget->ArcContinueButton, SIGNAL(clicked()),_gl_widget,SLOT(continue_Arc()));
-        connect(_side_widget->ArcJoinButton, SIGNAL(clicked()),_gl_widget,SLOT(join_Arcs()));
+
+        connect(_side_widget->ArcInsertButton, SIGNAL(clicked()),_gl_widget,SLOT(insertArc()));
+        connect(_side_widget->ArcContinueButton, SIGNAL(clicked()),_gl_widget,SLOT(continueArc()));
+        connect(_side_widget->ArcJoinButton, SIGNAL(clicked()),_gl_widget,SLOT(joinArcs()));
 
         connect(_side_widget->ArcTransformPointIndex, SIGNAL(valueChanged(int)),_gl_widget,SLOT(changeTransformPointIndex(int)));
         connect(_side_widget->ArcTransformX,SIGNAL(valueChanged(double)),_gl_widget,SLOT(changeTransformX(double)));
@@ -64,6 +65,10 @@ namespace cagd
         connect(_side_widget->ArcTransformZ,SIGNAL(valueChanged(double)),_gl_widget,SLOT(changeTransformZ(double)));
 
         connect(_side_widget->ArcMergeButton, SIGNAL(clicked()),_gl_widget,SLOT(mergeArcs()));
+        //Patch
+        connect(_side_widget->PatchInsertButton, SIGNAL(clicked()),_gl_widget,SLOT(insertPatch()));
+        connect(_side_widget->PatchContinueButton, SIGNAL(clicked()),_gl_widget,SLOT(continuePatch()));
+
     }
 
     //--------------------------------
