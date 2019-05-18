@@ -938,7 +938,73 @@ namespace cagd
           compositeCurve->merge(firstIndex,secondIndex,firstDirection,secondDirection);
       }
     }
+    void GLWidget::insertPatchX(){
+      if(!compositePatch){
+         compositePatch = new HyperbolicCompositePatch3(MAX_PATCH_COUNT);
+         patchMaterials[0]=MatFBEmerald;
+         patchMaterials[1]=MatFBGold;
+         patchMaterials[2]=MatFBBrass;
+      }
 
+      ColumnMatrix<DCoordinate3> data(16);
+      data[0]=DCoordinate3(5,0,0);
+      data[1]=DCoordinate3(5,1,0);
+      data[2]=DCoordinate3(5,2,1);
+      data[3]=DCoordinate3(5,3,0);
+
+      data[4]=DCoordinate3(6,0,0);
+      data[5]=DCoordinate3(6,1,0);
+      data[6]=DCoordinate3(6,2,0);
+      data[7]=DCoordinate3(6,3,0);
+
+      data[8]=DCoordinate3(7,0,0);
+      data[9]=DCoordinate3(7,1,0);
+      data[10]=DCoordinate3(7,2,0);
+      data[11]=DCoordinate3(7,3,0);
+
+      data[12]=DCoordinate3(8,0,0);
+      data[13]=DCoordinate3(8,1,0);
+      data[14]=DCoordinate3(8,2,0);
+      data[15]=DCoordinate3(8,3,0);
+      compositePatch->insert(5,1,data);
+    }
+
+    void GLWidget::insertPatchY(){
+      if(!compositePatch){
+         compositePatch = new HyperbolicCompositePatch3(MAX_PATCH_COUNT);
+         patchMaterials[0]=MatFBEmerald;
+         patchMaterials[1]=MatFBGold;
+         patchMaterials[2]=MatFBBrass;
+      }
+
+      ColumnMatrix<DCoordinate3> data(16);
+      data[0]=DCoordinate3(0,5,0);
+      data[1]=DCoordinate3(0,6,0);
+      data[2]=DCoordinate3(0,7,1);
+      data[3]=DCoordinate3(0,8,0);
+
+      data[4]=DCoordinate3(1,5,0);
+      data[5]=DCoordinate3(1,6,0);
+      data[6]=DCoordinate3(1,7,0);
+      data[7]=DCoordinate3(1,8,0);
+
+      data[8]=DCoordinate3(2,5,0);
+      data[9]=DCoordinate3(2,6,0);
+      data[10]=DCoordinate3(2,7,0);
+      data[11]=DCoordinate3(2,8,0);
+
+      data[12]=DCoordinate3(3,5,0);
+      data[13]=DCoordinate3(3,6,0);
+      data[14]=DCoordinate3(3,7,0);
+      data[15]=DCoordinate3(3,8,0);
+      compositePatch->insert(5,1,data);
+    }
+
+    void GLWidget::clearPatch(){
+      if(compositePatch){
+          compositePatch->clear();
+        }
+    }
     void GLWidget::insertPatch(){
       if(!compositePatch){
          compositePatch = new HyperbolicCompositePatch3(MAX_PATCH_COUNT);
@@ -976,6 +1042,13 @@ namespace cagd
       if(compositePatch){
           compositePatch->continueExisting(_sideWidget->PatchContinueSpinBox->value(),(HyperbolicCompositePatch3::Direction)_sideWidget->PatchContinueDirection->currentIndex(),_sideWidget->PatchContinueAlpha->value(),
                                            patchMaterials[_sideWidget->PatchContinueMaterial->currentIndex()]);
+      }
+    }
+    void GLWidget::joinPatch(){
+      if(compositePatch){
+        compositePatch->join(_sideWidget->PatchJoinFirstIndex->value(),_sideWidget->PatchJoinSecondIndex->value(),
+                             (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchJoinFirstDirection->currentIndex()),
+                             (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchJoinSecondDirection->currentIndex()));
       }
     }
 }

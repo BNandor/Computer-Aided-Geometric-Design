@@ -47,6 +47,12 @@ namespace cagd {
     vector<PatchAttributes*> _patches;
     GLuint _patch_count;
   public:
+    void clear(){
+      for (int i=0;i<_patch_count;++i) {
+          delete _patches[i];
+        }
+      _patch_count=0;
+    }
     int getSize(){return _patch_count;}
     PatchAttributes* getPatch(int index){return _patches[index];}
     HyperbolicCompositePatch3(GLuint max_curve_count):_patches(max_curve_count),_patch_count(0){
@@ -54,7 +60,7 @@ namespace cagd {
     }
     GLboolean insert(GLdouble alpha,GLuint max_order_of_derivatives,const ColumnMatrix<DCoordinate3>& _data,Material material=MatFBEmerald);
     GLboolean continueExisting(GLuint id,Direction direction,GLdouble alpha,Material material);
-//    GLuint join(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection,GLdouble scale);
+    GLuint join(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection);
 //    GLuint merge(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection);
 //    GLboolean updatePosition(int arcindex,int pointindex,DCoordinate3 newcoord);
 //    GLboolean updateArcForRendering( PatchAttributes*);

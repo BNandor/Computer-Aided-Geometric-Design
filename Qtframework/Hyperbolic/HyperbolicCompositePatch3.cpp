@@ -5,7 +5,7 @@ namespace cagd{
   HyperbolicCompositePatch3::PatchAttributes::~PatchAttributes(){
     if(patch)delete patch;
     if(img)delete img;
-    if(derivatives_color)delete derivatives_color;
+//    if(derivatives_color)delete derivatives_color;
   }
   HyperbolicCompositePatch3::PatchAttributes::PatchAttributes(const PatchAttributes & other){
     patch = new HyperbolicPatch3(*other.patch);
@@ -103,6 +103,99 @@ namespace cagd{
             coords[i*4 + 3] = (4*p[0][i]-3*p[1][i]);
           }
             }break;
+      case NE:{
+               cpatch->patch->GetData(0,2,p[0][2]);
+               cpatch->patch->GetData(0,3,p[0][3]);
+               cpatch->patch->GetData(1,2,p[1][2]);
+               cpatch->patch->GetData(1,3,p[1][3]);
+
+          for (int i=0;i<4;++i) {
+            coords[3*4 + i] = (i+1)*p[0][3]-i*p[0][2];
+          }
+          for (int i=0;i<4;++i) {
+            coords[i*4 ] = (4-i)*p[0][3]-(4-i-1)*p[1][3];
+          }
+          coords[2*4+1]= 2*p[0][3]-p[1][2];
+          coords[1*4+2]= 3*p[0][3]-2*p[1][2];
+          coords[0*4+3]= 4*p[0][3]-3*p[1][2];
+
+          coords[0*4+1]= (2/3.0)*coords[0]+(1/3.0)*coords[3];
+          coords[0*4+2]= (1/3.0)*coords[0]+(2/3.0)*coords[3];
+          coords[1*4+1]=(1/2.0)*(coords[1*4+0]+coords[1*4+2]);
+          coords[2*4+2]=(1/2.0)*(coords[1*4+2]+coords[3*4+2]);
+          coords[1*4+3]= (2/3.0)*coords[0*4+3]+(1/3.0)*coords[3*4+3];
+          coords[2*4+3]= (1/3.0)*coords[0*4+3]+(2/3.0)*coords[3*4+3];
+      }break;
+      case SW:{
+               cpatch->patch->GetData(2,0,p[0][2]);
+               cpatch->patch->GetData(3,0,p[0][3]);
+               cpatch->patch->GetData(2,1,p[1][2]);
+               cpatch->patch->GetData(3,1,p[1][3]);
+
+          for (int i=0;i<4;++i) {
+            coords[0*4 + i] = (4-i)*p[0][3]-(4-i-1)*p[1][3];
+          }
+          for (int i=0;i<4;++i) {
+            coords[i*4 +3 ] = (i+1)*p[0][3]-(i)*p[0][2];
+          }
+          coords[1*4+2]= 2*p[0][3]-p[1][2];
+          coords[2*4+1]= 3*p[0][3]-2*p[1][2];
+          coords[3*4+0]= 4*p[0][3]-3*p[1][2];
+
+          coords[3*4+1]= (2/3.0)*coords[3*4+0]+(1/3.0)*coords[3*4+3];
+          coords[3*4+2]= (1/3.0)*coords[3*4+0]+(2/3.0)*coords[3*4+3];
+          coords[2*4+2]=(1/2.0)*(coords[2*4+1]+coords[3*4+2]);
+          coords[1*4+1]=(1/2.0)*(coords[0*4+1]+coords[2*4+1]);
+          coords[2*4+0]= (1/3.0)*coords[0*4+0]+(2/3.0)*coords[3*4+0];
+          coords[1*4+0]= (2/3.0)*coords[0*4+0]+(1/3.0)*coords[3*4+0];
+      }break;
+      case NW:{
+               cpatch->patch->GetData(0,0,p[0][0]);
+               cpatch->patch->GetData(0,1,p[0][1]);
+               cpatch->patch->GetData(1,0,p[1][0]);
+               cpatch->patch->GetData(1,1,p[1][1]);
+
+          for (int i=0;i<4;++i) {
+            coords[i*4 + 3] = (4-i)*p[0][0]-(4-i-1)*p[1][0];
+          }
+          for (int i=0;i<4;++i) {
+            coords[3*4 + i ] = (4-i)*p[0][0]-(4-i-1)*p[0][1];
+          }
+          coords[2*4+2]= 2*p[0][0]-p[1][1];
+          coords[1*4+1]= 3*p[0][0]-2*p[1][1];
+          coords[0*4+0]= 4*p[0][0]-3*p[1][1];
+
+          coords[0*4+1]= (2/3.0)*coords[0]+(1/3.0)*coords[3];
+          coords[0*4+2]= (1/3.0)*coords[0]+(2/3.0)*coords[3];
+          coords[1*4+2]=(1/2.0)*(coords[1*4+1]+coords[1*4+3]);
+          coords[2*4+1]=(1/2.0)*(coords[1*4+1]+coords[3*4+1]);
+          coords[1*4+0]= (2/3.0)*coords[0*4+0]+(1/3.0)*coords[3*4+0];
+          coords[2*4+0]= (1/3.0)*coords[0*4+0]+(2/3.0)*coords[3*4+0];
+      }break;
+      case SE:{
+               cpatch->patch->GetData(3,3,p[1][1]);
+               cpatch->patch->GetData(3,2,p[1][0]);
+               cpatch->patch->GetData(2,3,p[0][1]);
+               cpatch->patch->GetData(2,2,p[0][0]);
+
+          for (int i=0;i<4;++i) {
+            coords[0*4 + i] = (i+1)*p[1][1]-(i)*p[1][0];
+          }
+          for (int i=0;i<4;++i) {
+            coords[i*4 + 0 ] = (i+1)*p[1][1]-(i)*p[0][1];
+          }
+
+          coords[1*4+1]= 2*p[1][1]-p[0][0];
+          coords[2*4+2]= 3*p[1][1]-2*p[0][0];
+          coords[3*4+3]= 4*p[1][1]-3*p[0][0];
+
+          coords[3*4+1]= (2/3.0)*coords[3*4+0]+(1/3.0)*coords[3*4+3];
+          coords[3*4+2]= (1/3.0)*coords[3*4+0]+(2/3.0)*coords[3*4+3];
+          coords[1*4+2]=(1/2.0)*(coords[0*4+2]+coords[2*4+2]);
+          coords[2*4+1]=(1/2.0)*(coords[2*4+0]+coords[2*4+2]);
+          coords[1*4+3]= (2/3.0)*coords[0*4+3]+(1/3.0)*coords[3*4+3];
+          coords[2*4+3]= (1/3.0)*coords[0*4+3]+(2/3.0)*coords[3*4+3];
+      }break;
     }
 
     if(!insert(alpha,1,coords,material))return GL_FALSE;
@@ -124,52 +217,302 @@ namespace cagd{
           cpatch->neighbours[2] = _patches[_patch_count-1];
            _patches[_patch_count-1]->neighbours[6]= cpatch;
         }break;
+      case NE:{
+          cpatch->neighbours[1] = _patches[_patch_count-1];
+           _patches[_patch_count-1]->neighbours[5]= cpatch;
+        }break;
+      case SW:{
+          cpatch->neighbours[5] = _patches[_patch_count-1];
+           _patches[_patch_count-1]->neighbours[1]= cpatch;
+        }break;
+      case NW:{
+          cpatch->neighbours[7] = _patches[_patch_count-1];
+           _patches[_patch_count-1]->neighbours[3]= cpatch;
+        }break;
+      case SE:{
+          cpatch->neighbours[3] = _patches[_patch_count-1];
+           _patches[_patch_count-1]->neighbours[7]= cpatch;
+        }break;
     }
     return GL_TRUE;
   }
 
-//  GLuint HyperbolicCompositePatch3::join(GLuint firstId, GLuint secondId,Direction firstDirection,Direction secondDirection,GLdouble scale){
-//    if(firstId >= _arc_count || secondId >= _arc_count) {
-//        std::cout<<firstId<<" "<<secondId<<std::endl;
-//        return 9;}
-//    ColumnMatrix<DCoordinate3> coords(4);
-//    DCoordinate3 p2,p3;
-//    DCoordinate3 q2,q3;
-//    if(firstDirection == Right){
-//        p3 = (*(_arcs[firstId]->arc))[3];
-//        p2 = (*(_arcs[firstId]->arc))[2];
-//    }else{
-//        p3 = (*(_arcs[firstId]->arc))[0];
-//        p2 = (*(_arcs[firstId]->arc))[1];
+  GLuint HyperbolicCompositePatch3::join(GLuint firstId, GLuint secondId,Direction firstDirection,Direction secondDirection){
+    if(firstId >= _patch_count || secondId >= _patch_count) {
+        std::cerr<<"Invalid ids"<<firstId<<" or "<<secondId<<std::endl;
+        return 9;
+    }
+
+    HyperbolicPatch3* firstPatch = _patches[firstId]->patch;
+    HyperbolicPatch3* secondPatch = _patches[secondId]->patch;
+
+    ColumnMatrix<DCoordinate3> coords(16);
+    DCoordinate3 p[2][4];
+    DCoordinate3 q[2][4];
+
+    switch (firstDirection) {
+      case N:{
+          for (int i=0;i<4;++i) {
+              firstPatch->GetData(0,i,p[1][i]);
+              firstPatch->GetData(1,i,p[0][i]);
+          }
+        }break;
+      case S:{
+          for (int i=0;i<4;++i) {
+              firstPatch->GetData(2,i,p[0][i]);
+              firstPatch->GetData(3,i,p[1][i]);
+          }
+        }break;
+      case E:{
+          for (int i=0;i<4;++i) {
+              firstPatch->GetData(i,2,p[0][i]);
+              firstPatch->GetData(i,3,p[1][i]);
+          }
+        }break;
+      case W:{
+          for (int i=0;i<4;++i) {
+              firstPatch->GetData(i,0,p[1][i]);
+              firstPatch->GetData(i,1,p[0][i]);
+          }
+        }break;
+      }
+
+    switch (secondDirection) {
+      case S:{
+          for (int i=0;i<4;++i) {
+              secondPatch->GetData(2,i,q[0][i]);
+              secondPatch->GetData(3,i,q[1][i]);
+          }
+        }break;
+      case N:{
+          for (int i=0;i<4;++i) {
+              secondPatch->GetData(0,i,q[1][i]);
+              secondPatch->GetData(1,i,q[0][i]);
+          }
+        }break;
+      case W:{
+          for (int i=0;i<4;++i) {
+              secondPatch->GetData(i,0,q[1][i]);
+              secondPatch->GetData(i,1,q[0][i]);
+          }
+        }break;
+      case E:{
+          for (int i=0;i<4;++i) {
+              secondPatch->GetData(i,2,q[0][i]);
+              secondPatch->GetData(i,3,q[1][i]);
+          }
+        }break;
+      }
+
+  //Connecting the patches with a new one
+    //set boundary coords
+  bool up;
+  switch(firstDirection){
+    case N:{
+        switch(secondDirection){
+          case N:{
+              for (int i=0;i<4;++i) {
+                coords[0*4+3-i]=p[1][i];
+                coords[1*4+3-i]=2*p[1][i]-p[0][i];
+
+                coords[2*4+3-i]=2*q[1][3-i]-q[0][3-i];
+                coords[3*4+3-i]=q[1][3-i];
+              }
+            }break;
+          case S:{
+              for (int i=0;i<4;++i) {
+                  coords[0*4+i]=q[1][i];
+                  coords[1*4+i]=2*q[1][i]-q[0][i];
+
+                  coords[2*4+i]=2*p[1][i]-p[0][i];
+                  coords[3*4+i]=p[1][i];
+              }
+
+            }break;
+          case E:{
+            for (int i=0;i<4;++i) {
+                    coords[0*4+i]=q[1][i];
+                    coords[1*4+i]=2*q[1][i]-q[0][i];
+
+                    coords[2*4+i]=2*p[1][i]-p[0][i];
+                    coords[3*4+i]=p[1][i];
+                  }
+            }break;
+          case W:{
+            for (int i=0;i<4;++i) {
+                    coords[0*4+i]=q[1][i];
+                    coords[1*4+i]=2*q[1][i]-q[0][i];
+
+                    coords[2*4+i]=2*p[1][i]-p[0][i];
+                    coords[3*4+i]=p[1][i];
+                  }
+            }break;
+          }
+      }break;
+    case S:{
+        switch(secondDirection){
+          case N:{
+              for (int i=0;i<4;++i) {
+                  coords[0*4+3-i]=q[1][i];
+                  coords[1*4+3-i]=2*q[1][i]-q[0][i];
+
+                  coords[2*4+3-i]=2*p[1][i]-p[0][i];
+                  coords[3*4+3-i]=p[1][i];
+              }
+            }break;
+          case S:{
+              for (int i=0;i<4;++i) {
+                  coords[0*4+i]=q[1][i];
+                  coords[1*4+i]=2*q[1][i]-q[0][i];
+
+                  coords[2*4+i]=2*p[1][3-i]-p[0][3-i];
+                  coords[3*4+i]=p[1][3-i];
+              }
+            }break;
+          case E:{
+            for (int i=0;i<4;++i) {
+                    coords[0*4+3-i]=p[1][3-i];
+                    coords[1*4+3-i]=2*p[1][3-i]-p[0][3-i];
+
+                    coords[2*4+3-i]=2*q[1][3-i]-q[0][3-i];
+                    coords[3*4+3-i]=q[1][3-i];
+                  }
+            }break;
+          case W:{
+            for (int i=0;i<4;++i) {
+                    coords[0*4+i]=p[1][i];
+                    coords[1*4+i]=2*p[1][i]-p[0][i];
+
+                    coords[2*4+i]=2*q[1][3-i]-q[0][3-i];
+                    coords[3*4+i]=q[1][3-i];
+                  }
+            }break;
+          }
+      }break;
+    case E:{
+         switch(secondDirection){
+           case W:{
+                     for (int i=0;i<4;++i) {
+                       coords[0*4+i]=q[1][i];
+                       coords[1*4+i]=2*q[1][i]-q[0][i];
+
+                       coords[2*4+i]=2*p[1][i]-p[0][i];
+                       coords[3*4+i]=p[1][i];
+                     }
+             }break;
+           case E:{
+               for (int i=0;i<4;++i) {
+                 coords[0*4+i]=p[1][3-i];
+                 coords[1*4+i]=2*p[1][3-i]-p[0][3-i];
+
+                 coords[2*4+i]=2*q[1][i]-q[0][i];
+                 coords[3*4+i]=q[1][i];
+               }
+             }break;
+           case N:{
+             for (int i=0;i<4;++i) {
+                     coords[0*4+i]=q[1][3-i];
+                     coords[1*4+i]=2*q[1][3-i]-q[0][3-i];
+
+                     coords[2*4+i]=2*p[1][i]-p[0][i];
+                     coords[3*4+i]=p[1][i];
+                   }
+             }break;
+           case S:{
+             for (int i=0;i<4;++i) {
+                     coords[0*4+i]=p[1][3-i];
+                     coords[1*4+i]=2*p[1][3-i]-p[0][3-i];
+
+                     coords[2*4+i]=2*q[1][3-i]-q[0][3-i];
+                     coords[3*4+i]=q[1][3-i];
+                   }
+             }break;
+           }
+      }break;
+    case W:{
+         switch(secondDirection){
+           case E:{
+                     for (int i=0;i<4;++i) {
+                       coords[0*4+i]=p[1][i];
+                       coords[1*4+i]=2*p[1][i]-p[0][i];
+
+                       coords[2*4+i]=2*q[1][i]-q[0][i];
+                       coords[3*4+i]=q[1][i];
+                     }
+             }break;
+           case W:{
+               for (int i=0;i<4;++i) {
+                   coords[0*4+i]=q[1][i];
+                   coords[1*4+i]=2*q[1][i]-q[0][i];
+
+                   coords[2*4+i]=2*p[1][3-i]-p[0][3-i];
+                   coords[3*4+i]=p[1][3-i];
+               }
+             }break;
+           case N:{
+             for (int i=0;i<4;++i) {
+                     coords[0*4+i]=q[1][3-i];
+                     coords[1*4+i]=2*q[1][3-i]-q[0][3-i];
+
+                     coords[2*4+i]=2*p[1][3-i]-p[0][3-i];
+                     coords[3*4+i]=p[1][3-i];
+                   }
+             }break;
+           case S:{
+             for (int i=0;i<4;++i) {
+                     coords[0*4+i]=p[1][i];
+                     coords[1*4+i]=2*p[1][i]-p[0][i];
+
+                     coords[2*4+i]=2*q[1][3-i]-q[0][3-i];
+                     coords[3*4+i]=q[1][3-i];
+                   }
+             }break;
+           }
+      }break;
+  }
+
+  //if( firstDirection < secondDirection ){
+//      for (int i=0;i<4;++i) {
+//        coords[0*4+i]=q[1][i];
+//        coords[1*4+i]=2*q[1][i]-q[0][i];
+
+//        coords[2*4+i]=2*p[1][i]-p[0][i];
+//        coords[3*4+i]=p[1][i];
+//      }
+    //}else{
+//      for (int i=0;i<4;++i) {
+//        coords[0*4+i]=p[1][i];
+//        coords[1*4+i]=2*p[1][i]-p[0][i];
+
+//        coords[2*4+i]=2*q[1][i]-q[0][i];
+//        coords[3*4+i]=q[1][i];
+//      }
 //    }
-//    if(secondDirection == Right){
-//        q3 = (*(_arcs[secondId]->arc))[3];
-//        q2 = (*(_arcs[secondId]->arc))[2];
-//    }else{
-//        q3 = (*(_arcs[secondId]->arc))[0];
-//        q2 = (*(_arcs[secondId]->arc))[1];
-//    }
-//  coords[3] = q3;
-//  coords[0] = p3;
-//  coords[1] = p3*2 - p2;
-//  coords[2] = q3*2 - q2;
-//  GLdouble alpha_avg =( _arcs[firstId]->arc->getAlpha() + _arcs[secondId]->arc->getAlpha())/2.0;
-//  Color4 color_avg((_arcs[firstId]->color->r() + _arcs[firstId]->color->r())/2.0,(_arcs[firstId]->color->g() + _arcs[firstId]->color->g())/2.0,(_arcs[firstId]->color->b() + _arcs[firstId]->color->b())/2.0,0);
-//  if(!insert(alpha_avg,2,coords,scale,color_avg))return 2;
-//  if(firstDirection == Right){
-//    _arcs[firstId]->next = _arcs[_arc_count-1];
-//    }else{
-//      _arcs[firstId]->previous = _arcs[_arc_count-1];
-//    }
-//  if(secondDirection == Right){
-//    _arcs[secondId]->next = _arcs[_arc_count-1];
-//    }else{
-//      _arcs[secondId]->previous = _arcs[_arc_count-1];
-//    }
-//  _arcs[_arc_count-1]->previous = _arcs[firstId];
-//  _arcs[_arc_count-1]->next = _arcs[secondId];
-//  return 1;
-//  }
+
+
+  GLdouble alpha_avg =(firstPatch->GetAlpha()+secondPatch->GetAlpha())/2.0;
+  if(!insert(alpha_avg,1,coords,_patches[firstId]->material))return 2;
+  switch (firstDirection) {
+    case N:{
+      _patches[firstId]->neighbours[S]=_patches[_patch_count-1];
+      }break;
+    case S:{
+      _patches[firstId]->neighbours[N]=_patches[_patch_count-1];
+      }break;
+    }
+  switch (secondDirection) {
+    case S:{
+      _patches[secondId]->neighbours[N]=_patches[_patch_count-1];
+      }break;
+    case N:{
+      _patches[secondId]->neighbours[S]=_patches[_patch_count-1];
+      }break;
+    }
+  _patches[_patch_count-1]->neighbours[N]=_patches[secondId];
+  _patches[_patch_count-1]->neighbours[S]=_patches[firstId];
+  //Set directions
+  return 1;
+  }
 
 //  GLboolean HyperbolicCompositePatch3::updateArcForRendering( PatchAttributes* attr){
 //    attr->arc->DeleteVertexBufferObjectsOfData();
@@ -290,3 +633,4 @@ void HyperbolicCompositePatch3::renderAll(){
   }
 }
 }
+

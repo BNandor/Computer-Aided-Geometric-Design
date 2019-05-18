@@ -67,8 +67,11 @@ namespace cagd
         connect(_side_widget->ArcMergeButton, SIGNAL(clicked()),_gl_widget,SLOT(mergeArcs()));
         //Patch
         connect(_side_widget->PatchInsertButton, SIGNAL(clicked()),_gl_widget,SLOT(insertPatch()));
+        connect(_side_widget->PatchInsertButtonX, SIGNAL(clicked()),_gl_widget,SLOT(insertPatchX()));
+        connect(_side_widget->PatchInsertButtonY, SIGNAL(clicked()),_gl_widget,SLOT(insertPatchY()));
+        connect(_side_widget->PatchClearButton, SIGNAL(clicked()),_gl_widget,SLOT(clearPatch()));
         connect(_side_widget->PatchContinueButton, SIGNAL(clicked()),_gl_widget,SLOT(continuePatch()));
-
+        connect(_side_widget->PatchJoinButton, SIGNAL(clicked()),_gl_widget,SLOT(joinPatch()));
     }
 
     //--------------------------------

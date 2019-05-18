@@ -409,7 +409,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="arc_insert_tab">
       <attribute name="title">
@@ -1230,7 +1230,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="arc_insert_tab_2">
       <attribute name="title">
@@ -1947,6 +1947,45 @@
         </property>
        </item>
       </widget>
+      <widget class="QPushButton" name="PatchInsertButtonX">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>110</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>X</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="PatchInsertButtonY">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>150</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Y</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="PatchClearButton">
+       <property name="geometry">
+        <rect>
+         <x>370</x>
+         <y>190</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Clearall</string>
+       </property>
+      </widget>
      </widget>
      <widget class="QWidget" name="arc_continue_tab_2">
       <attribute name="title">
@@ -1988,7 +2027,7 @@
         </rect>
        </property>
        <property name="text">
-        <string>Continue Arc</string>
+        <string>Continue Patch</string>
        </property>
       </widget>
       <widget class="QComboBox" name="PatchContinueDirection">
@@ -2136,7 +2175,7 @@
         <string>First index</string>
        </property>
       </widget>
-      <widget class="QSpinBox" name="ArcJoinFirstIndex_2">
+      <widget class="QSpinBox" name="PatchJoinFirstIndex">
        <property name="geometry">
         <rect>
          <x>180</x>
@@ -2159,7 +2198,7 @@
         <string>Second index</string>
        </property>
       </widget>
-      <widget class="QSpinBox" name="ArcJoinSecondIndex_2">
+      <widget class="QSpinBox" name="PatchJoinSecondIndex">
        <property name="geometry">
         <rect>
          <x>180</x>
@@ -2172,36 +2211,10 @@
         <number>1</number>
        </property>
       </widget>
-      <widget class="QLabel" name="label_42">
+      <widget class="QPushButton" name="PatchJoinButton">
        <property name="geometry">
         <rect>
-         <x>10</x>
-         <y>100</y>
-         <width>59</width>
-         <height>14</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Scale</string>
-       </property>
-      </widget>
-      <widget class="QDoubleSpinBox" name="ArcJoinScale_2">
-       <property name="geometry">
-        <rect>
-         <x>160</x>
-         <y>100</y>
-         <width>66</width>
-         <height>23</height>
-        </rect>
-       </property>
-       <property name="value">
-        <double>0.600000000000000</double>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="ArcJoinButton_2">
-       <property name="geometry">
-        <rect>
-         <x>140</x>
+         <x>350</x>
          <y>140</y>
          <width>80</width>
          <height>22</height>
@@ -2211,7 +2224,7 @@
         <string>Join</string>
        </property>
       </widget>
-      <widget class="QComboBox" name="ArcJoinFirstDirection_2">
+      <widget class="QComboBox" name="PatchJoinFirstDirection">
        <property name="geometry">
         <rect>
          <x>350</x>
@@ -2222,32 +2235,42 @@
        </property>
        <item>
         <property name="text">
-         <string>Right</string>
+         <string>N</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Left</string>
-        </property>
-       </item>
-      </widget>
-      <widget class="QComboBox" name="ArcJoinSecondDirection_2">
-       <property name="geometry">
-        <rect>
-         <x>350</x>
-         <y>60</y>
-         <width>79</width>
-         <height>22</height>
-        </rect>
-       </property>
-       <item>
-        <property name="text">
-         <string>Right</string>
+         <string>NE</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Left</string>
+         <string>E</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>S</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SW</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>W</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>NW</string>
         </property>
        </item>
       </widget>
@@ -2276,6 +2299,56 @@
        <property name="text">
         <string>Direction</string>
        </property>
+      </widget>
+      <widget class="QComboBox" name="PatchJoinSecondDirection">
+       <property name="geometry">
+        <rect>
+         <x>350</x>
+         <y>60</y>
+         <width>79</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <item>
+        <property name="text">
+         <string>N</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>NE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>E</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SE</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>S</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>SW</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>W</string>
+        </property>
+       </item>
+       <item>
+        <property name="text">
+         <string>NW</string>
+        </property>
+       </item>
       </widget>
      </widget>
      <widget class="QWidget" name="tab_5">

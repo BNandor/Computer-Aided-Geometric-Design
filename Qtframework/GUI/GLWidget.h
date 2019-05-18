@@ -118,7 +118,11 @@ namespace cagd
 
         //Patches
         void insertPatch();
+        void insertPatchX();
+        void insertPatchY();
+        void clearPatch();
         void continuePatch();
+        void joinPatch();
    private slots:
         void _animate();//Testing dynamic vertex buffer objects
     };

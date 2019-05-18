@@ -51,5 +51,6 @@ public:
           GLuint maximum_order_of_partial_derivatives,
           GLdouble u, GLdouble v, PartialDerivatives& pd) const;
   void setAlpha(GLdouble);
+  GLdouble GetAlpha(){return _alpha;}
 };
 #endif // HYPERBOLICPATCH3_H
