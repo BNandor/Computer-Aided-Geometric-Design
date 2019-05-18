@@ -72,6 +72,13 @@ namespace cagd
         connect(_side_widget->PatchClearButton, SIGNAL(clicked()),_gl_widget,SLOT(clearPatch()));
         connect(_side_widget->PatchContinueButton, SIGNAL(clicked()),_gl_widget,SLOT(continuePatch()));
         connect(_side_widget->PatchJoinButton, SIGNAL(clicked()),_gl_widget,SLOT(joinPatch()));
+
+        //Transform
+        connect(_side_widget->PatchTransformPointJ, SIGNAL(valueChanged(int)),_gl_widget,SLOT(changeTransformPointsIndex()));
+        connect(_side_widget->PatchTransformX,SIGNAL(valueChanged(double)),_gl_widget,SLOT(transformPatchX()));
+        connect(_side_widget->PatchTransformY,SIGNAL(valueChanged(double)),_gl_widget,SLOT(transformPatchY()));
+        connect(_side_widget->PatchTransformZ,SIGNAL(valueChanged(double)),_gl_widget,SLOT(transformPatchZ()));
+        connect(_side_widget->PatchMergeButton, SIGNAL(clicked()),_gl_widget,SLOT(mergePatches()));
     }
 
     //--------------------------------

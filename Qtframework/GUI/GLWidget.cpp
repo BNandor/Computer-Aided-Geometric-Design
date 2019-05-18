@@ -1038,17 +1038,62 @@ namespace cagd
         }
       updateGL();
     }
+
     void GLWidget::continuePatch(){
       if(compositePatch){
           compositePatch->continueExisting(_sideWidget->PatchContinueSpinBox->value(),(HyperbolicCompositePatch3::Direction)_sideWidget->PatchContinueDirection->currentIndex(),_sideWidget->PatchContinueAlpha->value(),
                                            patchMaterials[_sideWidget->PatchContinueMaterial->currentIndex()]);
       }
     }
+
     void GLWidget::joinPatch(){
       if(compositePatch){
         compositePatch->join(_sideWidget->PatchJoinFirstIndex->value(),_sideWidget->PatchJoinSecondIndex->value(),
                              (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchJoinFirstDirection->currentIndex()),
                              (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchJoinSecondDirection->currentIndex()));
       }
+    }
+
+    void GLWidget::changeTransformPointsIndex(){
+      if(compositePatch){
+        DCoordinate3 currentCoord =compositePatch->getCoord(_sideWidget->PatchTransformPointI->value(),
+                                                            _sideWidget->PatchTransformPointJ->value(),
+                                                            _sideWidget->PatchTransformPatchIndex->value());
+        _sideWidget->PatchTransformX->setValue(currentCoord.x());
+        _sideWidget->PatchTransformY->setValue(currentCoord.y());
+        _sideWidget->PatchTransformZ->setValue(currentCoord.z());
+      }
+    }
+    void GLWidget::transformPatchX(){
+      updatePatchXYZ(_sideWidget->PatchTransformPointI->value(),
+                     _sideWidget->PatchTransformPointJ->value(),
+                     _sideWidget->PatchTransformPatchIndex->value());
+    }
+    void GLWidget::transformPatchY(){
+      updatePatchXYZ(_sideWidget->PatchTransformPointI->value(),
+                     _sideWidget->PatchTransformPointJ->value(),
+                     _sideWidget->PatchTransformPatchIndex->value());
+    }
+    void GLWidget::transformPatchZ(){
+      updatePatchXYZ(_sideWidget->PatchTransformPointI->value(),
+                     _sideWidget->PatchTransformPointJ->value(),
+                     _sideWidget->PatchTransformPatchIndex->value());
+    }
+
+    void GLWidget::updatePatchXYZ(int i, int j, int patchIndex){
+      if(compositePatch){
+          DCoordinate3 newCoord(_sideWidget->PatchTransformX->value(),_sideWidget->PatchTransformY->value(),_sideWidget->PatchTransformZ->value());
+          compositePatch->update(i,j,patchIndex,newCoord);
+        }
+    }
+
+    void GLWidget::mergePatches(){
+      if(compositePatch){
+          int firstId = _sideWidget->PatchMergeFirstIndex->value();
+          int secondId = _sideWidget->PatchMergeSecondIndex->value();
+          compositePatch->merge(firstId,secondId,
+                                (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchMergeFirstDirection->currentIndex()),
+                                (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchMergeSecondDirection->currentIndex()));
+        }
     }
 }

@@ -88,6 +88,7 @@ namespace cagd
         void initialize_curves();
         void initialize_surfaces();
         void updateXYZ(int, int);
+        void updatePatchXYZ(int, int, int);
         SideWidget * _sideWidget;
     public slots:
         // public event handling methods/slots
@@ -123,6 +124,11 @@ namespace cagd
         void clearPatch();
         void continuePatch();
         void joinPatch();
+        void transformPatchX();
+        void transformPatchY();
+        void transformPatchZ();
+        void changeTransformPointsIndex();
+        void mergePatches();
    private slots:
         void _animate();//Testing dynamic vertex buffer objects
     };

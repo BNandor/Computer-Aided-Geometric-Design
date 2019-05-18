@@ -33,7 +33,7 @@ namespace cagd {
         PatchAttributes& operator=(const PatchAttributes & other);
         ~PatchAttributes();
 
-        GLboolean generateImage(GLuint max_order_of_derivatives){
+        GLboolean generateImage(){
           img = patch->GenerateImage(div_point_count,div_point_count);
           return img != 0;
         }
@@ -53,6 +53,11 @@ namespace cagd {
         }
       _patch_count=0;
     }
+    DCoordinate3 getCoord(int i, int j, int index){
+      DCoordinate3 coord;
+      _patches[index]->patch->GetData(i,j,coord);
+      return coord;
+    }
     int getSize(){return _patch_count;}
     PatchAttributes* getPatch(int index){return _patches[index];}
     HyperbolicCompositePatch3(GLuint max_curve_count):_patches(max_curve_count),_patch_count(0){
@@ -61,9 +66,9 @@ namespace cagd {
     GLboolean insert(GLdouble alpha,GLuint max_order_of_derivatives,const ColumnMatrix<DCoordinate3>& _data,Material material=MatFBEmerald);
     GLboolean continueExisting(GLuint id,Direction direction,GLdouble alpha,Material material);
     GLuint join(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection);
-//    GLuint merge(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection);
-//    GLboolean updatePosition(int arcindex,int pointindex,DCoordinate3 newcoord);
-//    GLboolean updateArcForRendering( PatchAttributes*);
+    GLuint merge(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection);
+    GLboolean update(int i,int j,int patchindex,DCoordinate3 newcoord);
+    GLboolean updatePatchForRendering( PatchAttributes*);
     void renderAll();
     ~HyperbolicCompositePatch3();
   };
