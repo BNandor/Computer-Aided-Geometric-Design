@@ -1060,6 +1060,32 @@ namespace cagd
       }
     }
 
+    void GLWidget::updateSelectionCurveOnContinue(){
+      GLuint patchIndex = _sideWidget->PatchContinueSpinBox->value();
+      HyperbolicCompositePatch3::Direction direction =(HyperbolicCompositePatch3::Direction) _sideWidget->PatchContinueDirection->currentIndex();
+      updateSelectionCurveOnPatchSelected(patchIndex,direction);
+    }
+
+    void GLWidget::updateSelectionCurveOnJoinFirst(){
+      GLuint patchIndex = _sideWidget->PatchJoinFirstIndex->value();
+      HyperbolicCompositePatch3::Direction direction =(HyperbolicCompositePatch3::Direction) _sideWidget->PatchJoinFirstDirection->currentIndex();
+      updateSelectionCurveOnPatchSelected(patchIndex,direction);
+    }
+    void GLWidget::updateSelectionCurveOnJoinSecond(){
+      GLuint patchIndex = _sideWidget->PatchJoinSecondIndex->value();
+      HyperbolicCompositePatch3::Direction direction =(HyperbolicCompositePatch3::Direction) _sideWidget->PatchJoinSecondDirection->currentIndex();
+      updateSelectionCurveOnPatchSelected(patchIndex,direction);
+    }
+    void GLWidget::updateSelectionCurveOnMergeFirst(){
+      GLuint patchIndex = _sideWidget->PatchMergeFirstIndex->value();
+      HyperbolicCompositePatch3::Direction direction =(HyperbolicCompositePatch3::Direction) _sideWidget->PatchMergeFirstDirection->currentIndex();
+      updateSelectionCurveOnPatchSelected(patchIndex,direction);
+    }
+    void GLWidget::updateSelectionCurveOnMergeSecond(){
+      GLuint patchIndex = _sideWidget->PatchMergeSecondIndex->value();
+      HyperbolicCompositePatch3::Direction direction =(HyperbolicCompositePatch3::Direction) _sideWidget->PatchMergeSecondDirection->currentIndex();
+      updateSelectionCurveOnPatchSelected(patchIndex,direction);
+    }
     void GLWidget::joinPatch(){
       if(compositePatch){
         compositePatch->join(_sideWidget->PatchJoinFirstIndex->value(),_sideWidget->PatchJoinSecondIndex->value(),
@@ -1079,6 +1105,7 @@ namespace cagd
         _sideWidget->PatchTransformX->setValue(currentCoord.x());
         _sideWidget->PatchTransformY->setValue(currentCoord.y());
         _sideWidget->PatchTransformZ->setValue(currentCoord.z());
+        updateSphereOnPatchSelected();
       }
     }
     void GLWidget::transformPatchX(){
@@ -1097,10 +1124,34 @@ namespace cagd
                      _sideWidget->PatchTransformPatchIndex->value());
     }
 
+    void GLWidget::updateSphereOnPatchSelected(){
+      if(compositePatch){
+
+        GLuint selectedPatchIndex = _sideWidget->PatchTransformPatchIndex->value();
+        GLuint selectedRow =_sideWidget->PatchTransformPointI->value();
+        GLuint selectedColumn =_sideWidget->PatchTransformPointJ->value();
+
+        if(selectedPatchIndex<compositePatch->getSize() && selectedRow < 4 && selectedColumn < 4){
+          compositePatch->updateSpherePosition(selectedRow,selectedColumn,selectedPatchIndex);
+          }
+        }
+    }
+
+    void GLWidget::updateSelectionCurveOnPatchSelected(GLuint patchIndex,HyperbolicCompositePatch3::Direction selectedDirection){
+      if(compositePatch){
+          if(patchIndex>=compositePatch->getSize()){
+              cerr<<"Error updating selection curve,invalid patch index"<<endl;
+              return;
+          }
+        compositePatch->updateSelectionCurve(patchIndex,selectedDirection);
+        }
+    }
+
     void GLWidget::updatePatchXYZ(int i, int j, int patchIndex){
       if(compositePatch){
           DCoordinate3 newCoord(_sideWidget->PatchTransformX->value(),_sideWidget->PatchTransformY->value(),_sideWidget->PatchTransformZ->value());
           compositePatch->update(i,j,patchIndex,newCoord);
+          updateSphereOnPatchSelected();
         }
     }
 

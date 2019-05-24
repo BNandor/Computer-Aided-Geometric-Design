@@ -242,6 +242,8 @@ namespace cagd{
         return 9;
     }
 
+    //Clear selectionCurve
+    clearSelectionCurve();
     HyperbolicPatch3* firstPatch = _patches[firstId]->patch;
     HyperbolicPatch3* secondPatch = _patches[secondId]->patch;
 
@@ -665,11 +667,12 @@ namespace cagd{
 
     if(patchIndex < 0 || patchIndex >= _patch_count)return GL_FALSE;
     if(i < 0 || i > 3 || j < 0 || j>3)return GL_FALSE;
+    // Clear selection curve
+    clearSelectionCurve();
 
     DCoordinate3 currentCoord;
     (*(_patches[patchIndex]->patch)).GetData(i,j,currentCoord);
-    DCoordinate3 diff = newCoord - currentCoord;
-
+    DCoordinate3 diff = newCoord - currentCoord;    
     switch(kind(i,j)){
       case 0:{
         vector<corresponding> correspondence = getCorresponding(_patches[patchIndex],currentCoord);
@@ -799,6 +802,8 @@ namespace cagd{
 
     DCoordinate3 p[4];
     DCoordinate3 q[4];
+    // Clear Selection curve
+    clearSelectionCurve();
     switch (firstDirection) {
       case N:{
           switch (secondDirection) {
@@ -1014,6 +1019,24 @@ namespace cagd{
   }
 
 void HyperbolicCompositePatch3::renderAll(){
+  if(sphere->_image){
+      glEnable(GL_LIGHTING);
+      glEnable(GL_LIGHT0);
+      glEnable(GL_NORMALIZE);
+      MatFBTurquoise.Apply();
+      sphere->_image->Render();
+      glDisable(GL_LIGHTING);
+      glDisable(GL_LIGHT0);
+      glDisable(GL_NORMALIZE);
+    }
+
+  if(selectedPatchBorderCurve){
+    glColor3f(0.2f,0.6f,0.6f);
+    glLineWidth(5.0);
+    selectedPatchBorderCurve->RenderDerivatives(0,GL_LINE_STRIP);
+    glLineWidth(1.0);
+    }
+
   for (int i=0;i<_patch_count;++i) {
     if(_patches[i]->img){
         glColor3f(0.5f,0.2f,0.0f);

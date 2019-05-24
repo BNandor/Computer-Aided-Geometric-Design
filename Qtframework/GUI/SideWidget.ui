@@ -393,7 +393,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>1</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="arc_tab">
     <attribute name="title">
@@ -409,7 +409,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>2</number>
+      <number>4</number>
      </property>
      <widget class="QWidget" name="arc_insert_tab">
       <attribute name="title">
@@ -735,12 +735,12 @@
        </property>
        <item>
         <property name="text">
-         <string>Right</string>
+         <string>Blue</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Left</string>
+         <string>Red</string>
         </property>
        </item>
       </widget>
@@ -913,12 +913,12 @@
        </property>
        <item>
         <property name="text">
-         <string>Right</string>
+         <string>Blue</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Left</string>
+         <string>Red</string>
         </property>
        </item>
       </widget>
@@ -933,12 +933,12 @@
        </property>
        <item>
         <property name="text">
-         <string>Right</string>
+         <string>Blue</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Left</string>
+         <string>Red</string>
         </property>
        </item>
       </widget>
@@ -1184,12 +1184,12 @@
        </property>
        <item>
         <property name="text">
-         <string>Right</string>
+         <string>Blue</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Left</string>
+         <string>Red</string>
         </property>
        </item>
       </widget>
@@ -1204,12 +1204,12 @@
        </property>
        <item>
         <property name="text">
-         <string>Right</string>
+         <string>Blue</string>
         </property>
        </item>
        <item>
         <property name="text">
-         <string>Left</string>
+         <string>Red</string>
         </property>
        </item>
       </widget>

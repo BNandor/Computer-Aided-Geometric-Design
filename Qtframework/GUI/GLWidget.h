@@ -130,6 +130,13 @@ namespace cagd
         void transformPatchZ();
         void changeTransformPointsIndex();
         void mergePatches();
+        void updateSphereOnPatchSelected();
+        void updateSelectionCurveOnPatchSelected(GLuint patchIndex,HyperbolicCompositePatch3::Direction selectedDirection);
+        void updateSelectionCurveOnContinue();
+        void updateSelectionCurveOnJoinFirst();
+        void updateSelectionCurveOnJoinSecond();
+        void updateSelectionCurveOnMergeFirst();
+        void updateSelectionCurveOnMergeSecond();
    private slots:
         void _animate();//Testing dynamic vertex buffer objects
     };

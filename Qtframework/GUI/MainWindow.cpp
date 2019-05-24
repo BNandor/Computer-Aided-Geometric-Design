@@ -78,10 +78,23 @@ namespace cagd
         connect(_side_widget->PatchInsertButtonY, SIGNAL(clicked()),_gl_widget,SLOT(insertPatchY()));
         connect(_side_widget->PatchClearButton, SIGNAL(clicked()),_gl_widget,SLOT(clearPatch()));
         connect(_side_widget->PatchContinueButton, SIGNAL(clicked()),_gl_widget,SLOT(continuePatch()));
+        connect(_side_widget->PatchContinueSpinBox, SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSelectionCurveOnContinue()));
+        connect(_side_widget->PatchContinueDirection, SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(updateSelectionCurveOnContinue()));
         connect(_side_widget->PatchJoinButton, SIGNAL(clicked()),_gl_widget,SLOT(joinPatch()));        
+        connect(_side_widget->PatchJoinFirstIndex, SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSelectionCurveOnJoinFirst()));
+        connect(_side_widget->PatchJoinSecondIndex, SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSelectionCurveOnJoinSecond()));
+        connect(_side_widget->PatchJoinFirstDirection, SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(updateSelectionCurveOnJoinFirst()));
+        connect(_side_widget->PatchJoinSecondDirection, SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(updateSelectionCurveOnJoinSecond()));
+
+        connect(_side_widget->PatchMergeFirstIndex, SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSelectionCurveOnMergeFirst()));
+        connect(_side_widget->PatchMergeSecondIndex, SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSelectionCurveOnMergeSecond()));
+        connect(_side_widget->PatchMergeFirstDirection, SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(updateSelectionCurveOnMergeFirst()));
+        connect(_side_widget->PatchMergeSecondDirection, SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(updateSelectionCurveOnMergeSecond()));
 
         //Transform
+        connect(_side_widget->PatchTransformPatchIndex, SIGNAL(valueChanged(int)),_gl_widget,SLOT(changeTransformPointsIndex()));
         connect(_side_widget->PatchTransformPointJ, SIGNAL(valueChanged(int)),_gl_widget,SLOT(changeTransformPointsIndex()));
+        connect(_side_widget->PatchTransformPointI, SIGNAL(valueChanged(int)),_gl_widget,SLOT(changeTransformPointsIndex()));
         connect(_side_widget->PatchTransformX,SIGNAL(valueChanged(double)),_gl_widget,SLOT(transformPatchX()));
         connect(_side_widget->PatchTransformY,SIGNAL(valueChanged(double)),_gl_widget,SLOT(transformPatchY()));
         connect(_side_widget->PatchTransformZ,SIGNAL(valueChanged(double)),_gl_widget,SLOT(transformPatchZ()));
