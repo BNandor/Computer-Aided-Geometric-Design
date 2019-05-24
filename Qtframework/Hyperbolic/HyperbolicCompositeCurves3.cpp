@@ -1,4 +1,5 @@
 #include "HyperbolicCompositeCurves3.h"
+#include "../Core/Materials.h"
 using namespace std;
 namespace cagd{
 
@@ -19,6 +20,8 @@ namespace cagd{
         if(_arcs[i])
           delete _arcs[i];
     }
+    if(leftSphere)delete leftSphere;
+    if(rightSphere)delete rightSphere;
   }
   HyperbolicCompositeCurve3::ArcAttributes& HyperbolicCompositeCurve3::ArcAttributes::operator=(const ArcAttributes & other){
     if(&other == this )return *this;
@@ -46,7 +49,7 @@ namespace cagd{
     arcattr->color=new Color4(color);
     arcattr->derivatives_color=new Color4(0.0,0.5,0.0);
      _arcs[_arc_count]=arcattr;
-     _arc_count++;
+     _arc_count++;     
      return GL_TRUE;
   }
 
@@ -220,7 +223,33 @@ namespace cagd{
      //(secondDirection == Left)?(*((_arcs[secondId])->arc))[0]:(*((_arcs[secondId])->arc))[3] = newpos;
   }
 
+void HyperbolicCompositeCurve3::updateSpheresLocationByindex(GLuint index){
+  if(index >= _arc_count){cerr<<"Error index in updateSpheresLocation"<<endl;return;}
+  leftSphere->updateImage((*(_arcs[index]->arc))[0]);
+  rightSphere->updateImage((*(_arcs[index]->arc))[3]);
+}
+
 void HyperbolicCompositeCurve3::renderAll(GLuint max_order_of_derivatives){
+  if(leftSphere->_image){
+      glEnable(GL_LIGHTING);
+      glEnable(GL_LIGHT0);
+      glEnable(GL_NORMALIZE);
+      MatFBRuby.Apply();
+      leftSphere->_image->Render();
+      glDisable(GL_LIGHTING);
+      glDisable(GL_LIGHT0);
+      glDisable(GL_NORMALIZE);
+    }
+  if(rightSphere->_image){
+      glEnable(GL_LIGHTING);
+      glEnable(GL_LIGHT0);
+      glEnable(GL_NORMALIZE);
+      MatFBTurquoise.Apply();
+      rightSphere->_image->Render();
+      glDisable(GL_LIGHTING);
+      glDisable(GL_LIGHT0);
+      glDisable(GL_NORMALIZE);
+    }
   for (int i=0;i<_arc_count;++i) {
     if(_arcs[i]->img){
       glColor3f(_arcs[i]->color->r(),_arcs[i]->color->g(),_arcs[i]->color->b());
@@ -238,3 +267,4 @@ void HyperbolicCompositeCurve3::renderAll(GLuint max_order_of_derivatives){
 }
 
 }
+

@@ -52,7 +52,7 @@ namespace cagd {
           delete _patches[i];
         }
       _patch_count=0;
-    }
+    }    
     DCoordinate3 getCoord(int i, int j, int index){
       DCoordinate3 coord;
       _patches[index]->patch->GetData(i,j,coord);

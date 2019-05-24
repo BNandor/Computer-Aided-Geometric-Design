@@ -865,6 +865,13 @@ namespace cagd
           updateGL();
       }
     }
+
+    void GLWidget::updateSpheresOnArcSelected(int index){
+      if(compositeCurve){
+            compositeCurve->updateSpheresLocationByindex(index);
+        }
+    }
+
     void GLWidget::joinArcs(){
       if(compositeCurve){
           HyperbolicCompositeCurve3::Direction firstDirection;
@@ -882,9 +889,11 @@ namespace cagd
           else {
             secondDirection = HyperbolicCompositeCurve3::Direction::Left;
           }
-          compositeCurve->join(_sideWidget->ArcJoinFirstIndex->value(),_sideWidget->ArcJoinSecondIndex->value(),firstDirection,secondDirection,_sideWidget->ArcJoinScale->value());
+          int firstIndex=_sideWidget->ArcJoinFirstIndex->value();
+          int secondIndex=_sideWidget->ArcJoinSecondIndex->value();
+          compositeCurve->join(firstIndex,secondIndex,firstDirection,secondDirection,_sideWidget->ArcJoinScale->value());
           //  std::cerr<<" error, in joining curves"<<std::endl;
-
+          compositeCurve->updateSpheresLocationByindex(secondIndex);
           updateGL();
       }
     }
@@ -904,17 +913,21 @@ namespace cagd
       int currentArcIndex =  _sideWidget->ArcTransformArcIndex->value();
       int point_id = _sideWidget->ArcTransformPointIndex->value();
       updateXYZ(currentArcIndex,point_id);
+      updateSpheresOnArcSelected(currentArcIndex);
+
     }
 
     void GLWidget::changeTransformY(double ){
       int currentArcIndex =  _sideWidget->ArcTransformArcIndex->value();
       int point_id = _sideWidget->ArcTransformPointIndex->value();
       updateXYZ(currentArcIndex,point_id);
+      updateSpheresOnArcSelected(currentArcIndex);
     }
     void GLWidget::changeTransformZ(double z){
       int currentArcIndex =  _sideWidget->ArcTransformArcIndex->value();
       int point_id = _sideWidget->ArcTransformPointIndex->value();
       updateXYZ(currentArcIndex,point_id);
+      updateSpheresOnArcSelected(currentArcIndex);
     }
 
     void GLWidget::updateXYZ(int arcIndex, int point_id){
@@ -936,6 +949,7 @@ namespace cagd
           HyperbolicCompositeCurve3::Direction firstDirection = _sideWidget->ArcMergeFirstDirection->currentIndex() == 0 ?HyperbolicCompositeCurve3::Right:HyperbolicCompositeCurve3::Left;
           HyperbolicCompositeCurve3::Direction secondDirection = _sideWidget->ArcMergeSecondDirection->currentIndex() == 0 ?HyperbolicCompositeCurve3::Right:HyperbolicCompositeCurve3::Left;
           compositeCurve->merge(firstIndex,secondIndex,firstDirection,secondDirection);
+          updateSpheresOnArcSelected(secondIndex);
       }
     }
     void GLWidget::insertPatchX(){
@@ -1056,6 +1070,9 @@ namespace cagd
 
     void GLWidget::changeTransformPointsIndex(){
       if(compositePatch){
+          if(_sideWidget->PatchTransformPatchIndex->value()<0 || _sideWidget->PatchTransformPatchIndex->value()>=compositePatch->getSize()){
+            return;
+          }
         DCoordinate3 currentCoord =compositePatch->getCoord(_sideWidget->PatchTransformPointI->value(),
                                                             _sideWidget->PatchTransformPointJ->value(),
                                                             _sideWidget->PatchTransformPatchIndex->value());

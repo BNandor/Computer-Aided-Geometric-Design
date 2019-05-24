@@ -3,6 +3,7 @@
 #include "HyperbolicArc3.h"
 #include "../Core/GenericCurves3.h"
 #include "../Core/Colors4.h"
+#include "./IndicatingSphere.h"
 #include <vector>
 
 using namespace std;
@@ -13,6 +14,8 @@ namespace cagd {
     enum Direction{Left=-1,Right=1};
     static const GLuint div_point_count = 100;
     constexpr static const GLdouble derivative_scale = 0.3;
+    IndicatingSphere* leftSphere;
+    IndicatingSphere* rightSphere;
 
     class ArcAttributes{
     public:
@@ -44,13 +47,21 @@ namespace cagd {
   public:
     int getSize(){return _arc_count;}
     ArcAttributes* getArc(int index){return _arcs[index];}
-    HyperbolicCompositeCurve3(GLuint max_curve_count):_arcs(max_curve_count),_arc_count(0){}
+
+    HyperbolicCompositeCurve3(GLuint max_curve_count):_arcs(max_curve_count),_arc_count(0){
+      leftSphere = new IndicatingSphere(0.01);
+      rightSphere = new IndicatingSphere(0.01);
+    }
+
     GLboolean insert(GLdouble alpha,GLuint max_order_of_derivatives,const ColumnMatrix<DCoordinate3>& _data,GLdouble scale,Color4 color=Color4(0.5,0.5,0.5,0));
     GLboolean continueExisting(GLuint id,Direction direction,GLdouble alpha, GLuint max_order_derivative,GLdouble scale );
     GLuint join(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection,GLdouble scale);
     GLuint merge(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection);
     GLboolean updatePosition(int arcindex,int pointindex,DCoordinate3 newcoord);
     GLboolean updateArcForRendering( ArcAttributes*);
+
+    // Sphere stuff
+    void updateSpheresLocationByindex(GLuint index);
     void renderAll(GLuint max_order_of_derivatives);
     ~HyperbolicCompositeCurve3();
   };  

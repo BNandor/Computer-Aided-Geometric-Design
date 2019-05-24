@@ -65,13 +65,20 @@ namespace cagd
         connect(_side_widget->ArcTransformZ,SIGNAL(valueChanged(double)),_gl_widget,SLOT(changeTransformZ(double)));
 
         connect(_side_widget->ArcMergeButton, SIGNAL(clicked()),_gl_widget,SLOT(mergeArcs()));
+        //update sphere stuff
+        connect(_side_widget->ArcContinueSpinBox,SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSpheresOnArcSelected(int)));
+        connect(_side_widget->ArcJoinFirstIndex,SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSpheresOnArcSelected(int)));
+        connect(_side_widget->ArcJoinSecondIndex,SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSpheresOnArcSelected(int)));
+        connect(_side_widget->ArcTransformArcIndex,SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSpheresOnArcSelected(int)));
+        connect(_side_widget->ArcMergeFirstIndex,SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSpheresOnArcSelected(int)));
+        connect(_side_widget->ArcMergeSecondIndex,SIGNAL(valueChanged(int)),_gl_widget,SLOT(updateSpheresOnArcSelected(int)));
         //Patch
         connect(_side_widget->PatchInsertButton, SIGNAL(clicked()),_gl_widget,SLOT(insertPatch()));
         connect(_side_widget->PatchInsertButtonX, SIGNAL(clicked()),_gl_widget,SLOT(insertPatchX()));
         connect(_side_widget->PatchInsertButtonY, SIGNAL(clicked()),_gl_widget,SLOT(insertPatchY()));
         connect(_side_widget->PatchClearButton, SIGNAL(clicked()),_gl_widget,SLOT(clearPatch()));
         connect(_side_widget->PatchContinueButton, SIGNAL(clicked()),_gl_widget,SLOT(continuePatch()));
-        connect(_side_widget->PatchJoinButton, SIGNAL(clicked()),_gl_widget,SLOT(joinPatch()));
+        connect(_side_widget->PatchJoinButton, SIGNAL(clicked()),_gl_widget,SLOT(joinPatch()));        
 
         //Transform
         connect(_side_widget->PatchTransformPointJ, SIGNAL(valueChanged(int)),_gl_widget,SLOT(changeTransformPointsIndex()));

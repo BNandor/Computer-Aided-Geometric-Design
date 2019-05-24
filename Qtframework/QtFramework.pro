@@ -86,7 +86,8 @@ HEADERS += \
     Hyperbolic/HyperbolicPatch3.h \
     Cyclic/CyclicCurves3.h \
     Hyperbolic/HyperbolicCompositeCurves3.h \
-    Hyperbolic/HyperbolicCompositePatch3.h
+    Hyperbolic/HyperbolicCompositePatch3.h \
+    Hyperbolic/IndicatingSphere.h
 
 SOURCES += \
     GUI/GLWidget.cpp \

@@ -30,6 +30,8 @@ namespace cagd
         TriangulatedMesh3* GenerateImage(
                 GLuint u_div_point_count,           // number of subdivision points in direction u
                 GLuint v_div_point_count,           // number of subdivision points in direction v
+                GLdouble scale=1.0,
+                DCoordinate3 offset=DCoordinate3(0,0,0),
                 GLenum usage_flag = GL_STATIC_DRAW) const;
     };
 }

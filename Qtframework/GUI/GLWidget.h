@@ -109,14 +109,15 @@ namespace cagd
         void change_ArcAlpha(double);
 
         void insertArc();
-        void continueArc();
+        void continueArc();        
         void joinArcs();
         void changeTransformPointIndex(int);
         void changeTransformX(double);
         void changeTransformY(double);
         void changeTransformZ(double);                
         void mergeArcs();
-
+          // sphere stuff
+          void updateSpheresOnArcSelected(int);
         //Patches
         void insertPatch();
         void insertPatchX();

@@ -22,6 +22,8 @@ namespace cagd
     TriangulatedMesh3* ParametricSurface3::GenerateImage(
         GLuint u_div_point_count,
         GLuint v_div_point_count,
+        GLdouble scale,
+        DCoordinate3 offset,
         GLenum usage_flag) const
     {
         if (_pd.GetRowCount() < 2 ||    // i.e., if we cannot evaluate the points and normal vectors of the surface
@@ -79,7 +81,7 @@ namespace cagd
                 index[3] = index[2] - 1;
 
                 // surface point
-                (*result)._vertex[index[0]] =  _pd(0, 0)(u, v);
+                (*result)._vertex[index[0]] =  offset +scale*(_pd(0, 0)(u, v));
 
                 // the surface normal is obtained as the cross product of the first order partial derivatives
                 (*result)._normal[index[0]] =  _pd(1, 0)(u, v);
