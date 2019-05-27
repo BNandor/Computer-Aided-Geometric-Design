@@ -208,13 +208,17 @@ namespace cagd{
 
       if(firstDirection == Right){
         (*((_arcs[firstId])->arc))[3]=newpos;
-        }else{
+         (_arcs[firstId]->next)=(_arcs[secondId]);
+        }else{          
         (*((_arcs[firstId])->arc))[0]=newpos;
+          (_arcs[firstId]->previous)=(_arcs[secondId]);
       }
       if(secondDirection == Right){
         (*((_arcs[secondId])->arc))[3]=newpos;
+          (_arcs[secondId]->next)=(_arcs[firstId]);
         }else{
         (*((_arcs[secondId])->arc))[0]=newpos;
+          (_arcs[secondId]->previous)=(_arcs[firstId]);
       }
       if(!updateArcForRendering(_arcs[firstId]))return GL_FALSE;
       if(!updateArcForRendering(_arcs[secondId]))return GL_FALSE;

@@ -99,6 +99,18 @@ namespace cagd
         connect(_side_widget->PatchTransformY,SIGNAL(valueChanged(double)),_gl_widget,SLOT(transformPatchY()));
         connect(_side_widget->PatchTransformZ,SIGNAL(valueChanged(double)),_gl_widget,SLOT(transformPatchZ()));
         connect(_side_widget->PatchMergeButton, SIGNAL(clicked()),_gl_widget,SLOT(mergePatches()));
+        // Shader stuff
+        connect(_side_widget->ShaderCheckbox, SIGNAL(clicked(bool)),_gl_widget,SLOT(setShaderOnOrOff(bool)));
+        connect(_side_widget->ShaderComboBox, SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(changeSelectedShader(int)));
+        connect(_side_widget->ShaderComboBox, SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(changeSelectedShader(int)));
+
+        // Reflection stuff
+        connect(_side_widget->ShaderReflectionScale, SIGNAL(valueChanged(double)),_gl_widget,SLOT(shaderChangeReflectionScale(double)));
+        connect(_side_widget->ShaderReflectionSmoothing, SIGNAL(valueChanged(double)),_gl_widget,SLOT(shaderChangeReflectionSmoothing(double)));
+        connect(_side_widget->ShaderReflectionShading, SIGNAL(valueChanged(double)),_gl_widget,SLOT(shaderChangeReflectionShading(double)));
+
+        // Toon stuff
+        connect(_side_widget->ShaderToonButtonOk, SIGNAL(clicked()),_gl_widget,SLOT( shaderChangeToonOutline()));
     }
 
     //--------------------------------

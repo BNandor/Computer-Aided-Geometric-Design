@@ -60,6 +60,7 @@ namespace cagd
       //Hyperbolic arcs
       GenericCurve3*  _hyperbolicArc3Image;
       class HyperbolicArc3* hyperbolicArc3;
+      bool isBeingTransformed=false;
       //TensorProductSurfaces
       class TensorProductSurface3* tensorSurface3DataGrid;
       TriangulatedMesh3* hyperbolicPatch3Image;
@@ -70,7 +71,7 @@ namespace cagd
 
       // shaders
       int                  _shader_to_show = 1;
-      bool                 _show_shader = true;
+      bool                 _show_shader = false;
       ShaderProgram*       _shader[4];
 
       //Project
@@ -147,6 +148,14 @@ namespace cagd
         void updateSelectionCurveOnJoinSecond();
         void updateSelectionCurveOnMergeFirst();
         void updateSelectionCurveOnMergeSecond();
+        // shader stu
+        void setShaderOnOrOff(bool);
+        void changeSelectedShader(int);
+        void shaderChangeReflectionScale(double);
+        void shaderChangeReflectionSmoothing(double);
+        void shaderChangeReflectionShading(double);
+        void shaderChangeToonOutline();
+
    private slots:
         void _animate();//Testing dynamic vertex buffer objects
     };

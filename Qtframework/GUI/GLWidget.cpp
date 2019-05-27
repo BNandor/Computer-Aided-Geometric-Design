@@ -202,18 +202,18 @@ namespace cagd
             //}
 
             //Testing dynamic vertex buffer objects
-            //if(currentHomework == DynamicVBO){
-//                if(_mouse.LoadFromOFF("/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Models/elephant.off",true)){//miert nem megy relativ pathel ?
-//                  if(_mouse.UpdateVertexBufferObjects((GL_DYNAMIC_DRAW))){
-//                      _angle=0.0;
-//                      _timer->start();
-//                      cout<<"started timer"<<endl;
-//                    }
+            if(currentHomework == DynamicVBO){
+                if(_mouse.LoadFromOFF("/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Models/elephant.off",true)){//miert nem megy relativ pathel ?
+                  if(_mouse.UpdateVertexBufferObjects((GL_DYNAMIC_DRAW))){
+                      _angle=0.0;
+                      _timer->start();
+                      cout<<"started timer"<<endl;
+                    }
 
-//                  }else{
-//                    cout<<"could not read off"<<endl;
-//                  }
-           // }
+                  }else{
+                    cout<<"could not read off"<<endl;
+                  }
+            }
             //Testing Parametric surface
             //if(currentHomework == ParametricSurface){
                 TriangularMatrix<ParametricSurface3::PartialDerivative> derivatives(3);
@@ -884,6 +884,7 @@ namespace cagd
     void GLWidget::updateSpheresOnArcSelected(int index){
       if(compositeCurve){
             compositeCurve->updateSpheresLocationByindex(index);
+            updateGL();
         }
     }
 
@@ -917,14 +918,18 @@ namespace cagd
       if(compositeCurve){
           int currentArcIndex =  _sideWidget->ArcTransformArcIndex->value();
           if(currentArcIndex>= 0  &&  currentArcIndex<  compositeCurve->getSize() && id>=0 && id<4){
+              isBeingTransformed=true;
             _sideWidget->ArcTransformX->setValue((*(compositeCurve->getArc(currentArcIndex)->arc))[id][0]);
             _sideWidget->ArcTransformY->setValue((*(compositeCurve->getArc(currentArcIndex)->arc))[id][1]);
             _sideWidget->ArcTransformZ->setValue((*(compositeCurve->getArc(currentArcIndex)->arc))[id][2]);
+            isBeingTransformed=false;
+            updateGL();
           }
       }
     }
 
     void GLWidget::changeTransformX(double x){
+      if(isBeingTransformed)return;
       int currentArcIndex =  _sideWidget->ArcTransformArcIndex->value();
       int point_id = _sideWidget->ArcTransformPointIndex->value();
       updateXYZ(currentArcIndex,point_id);
@@ -932,13 +937,15 @@ namespace cagd
 
     }
 
-    void GLWidget::changeTransformY(double ){
+    void GLWidget::changeTransformY(double y){
+      if(isBeingTransformed)return;
       int currentArcIndex =  _sideWidget->ArcTransformArcIndex->value();
       int point_id = _sideWidget->ArcTransformPointIndex->value();
       updateXYZ(currentArcIndex,point_id);
       updateSpheresOnArcSelected(currentArcIndex);
     }
     void GLWidget::changeTransformZ(double z){
+      if(isBeingTransformed)return;
       int currentArcIndex =  _sideWidget->ArcTransformArcIndex->value();
       int point_id = _sideWidget->ArcTransformPointIndex->value();
       updateXYZ(currentArcIndex,point_id);
@@ -946,7 +953,7 @@ namespace cagd
     }
 
     void GLWidget::updateXYZ(int arcIndex, int point_id){
-      if(compositeCurve){
+      if(compositeCurve){          
           if(arcIndex>= 0  &&  arcIndex<  compositeCurve->getSize() && point_id>=0 && point_id<4){
             DCoordinate3 newcoord(_sideWidget->ArcTransformX->value(),_sideWidget->ArcTransformY->value(),_sideWidget->ArcTransformZ->value());
             if(!compositeCurve->updatePosition(arcIndex,point_id,newcoord)){
@@ -965,6 +972,7 @@ namespace cagd
           HyperbolicCompositeCurve3::Direction secondDirection = _sideWidget->ArcMergeSecondDirection->currentIndex() == 0 ?HyperbolicCompositeCurve3::Right:HyperbolicCompositeCurve3::Left;
           compositeCurve->merge(firstIndex,secondIndex,firstDirection,secondDirection);
           updateSpheresOnArcSelected(secondIndex);
+          updateGL();
       }
     }
     void GLWidget::insertPatchX(){
@@ -996,6 +1004,7 @@ namespace cagd
       data[14]=DCoordinate3(8,2,0);
       data[15]=DCoordinate3(8,3,0);
       compositePatch->insert(5,1,data);
+      updateGL();
     }
 
     void GLWidget::insertPatchY(){
@@ -1027,11 +1036,13 @@ namespace cagd
       data[14]=DCoordinate3(3,7,0);
       data[15]=DCoordinate3(3,8,0);
       compositePatch->insert(5,1,data);
+      updateGL();
     }
 
     void GLWidget::clearPatch(){
       if(compositePatch){
           compositePatch->clear();
+          updateGL();
         }
     }
     void GLWidget::insertPatch(){
@@ -1072,6 +1083,7 @@ namespace cagd
       if(compositePatch){
           compositePatch->continueExisting(_sideWidget->PatchContinueSpinBox->value(),(HyperbolicCompositePatch3::Direction)_sideWidget->PatchContinueDirection->currentIndex(),_sideWidget->PatchContinueAlpha->value(),
                                            patchMaterials[_sideWidget->PatchContinueMaterial->currentIndex()]);
+          updateGL();
       }
     }
 
@@ -1079,6 +1091,7 @@ namespace cagd
       GLuint patchIndex = _sideWidget->PatchContinueSpinBox->value();
       HyperbolicCompositePatch3::Direction direction =(HyperbolicCompositePatch3::Direction) _sideWidget->PatchContinueDirection->currentIndex();
       updateSelectionCurveOnPatchSelected(patchIndex,direction);
+
     }
 
     void GLWidget::updateSelectionCurveOnJoinFirst(){
@@ -1106,6 +1119,7 @@ namespace cagd
         compositePatch->join(_sideWidget->PatchJoinFirstIndex->value(),_sideWidget->PatchJoinSecondIndex->value(),
                              (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchJoinFirstDirection->currentIndex()),
                              (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchJoinSecondDirection->currentIndex()));
+        updateGL();
       }
     }
 
@@ -1148,6 +1162,7 @@ namespace cagd
 
         if(selectedPatchIndex<compositePatch->getSize() && selectedRow < 4 && selectedColumn < 4){
           compositePatch->updateSpherePosition(selectedRow,selectedColumn,selectedPatchIndex);
+          updateGL();
           }
         }
     }
@@ -1159,6 +1174,7 @@ namespace cagd
               return;
           }
         compositePatch->updateSelectionCurve(patchIndex,selectedDirection);
+        updateGL();
         }
     }
 
@@ -1177,28 +1193,29 @@ namespace cagd
           compositePatch->merge(firstId,secondId,
                                 (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchMergeFirstDirection->currentIndex()),
                                 (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchMergeSecondDirection->currentIndex()));
+          updateGL();
         }
     }
 
     void GLWidget::installShaders() {
-        if (!_shader[0]->InstallShaders("Shaders/directional_light.vert", "Shaders/directional_light.frag")) {
+        if (!_shader[0]->InstallShaders("/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Shaders/directional_light.vert", "/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Shaders/directional_light.frag")) {
           throw Exception("Could not install shader!");
         }
 
-        if (!_shader[1]->InstallShaders("Shaders/two_sided_lighting.vert", "Shaders/two_sided_lighting.frag")) {
-          throw Exception("Could not install shader!");
+        if (!_shader[1]->InstallShaders("/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Shaders/two_sided_lighting.vert", "/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Shaders/two_sided_lighting.frag")) {
+          throw Exception("Could not install shade!");
         }
 
-        if (!_shader[2]->InstallShaders("Shaders/toon.vert", "Shaders/toon.frag")) {
+        if (!_shader[2]->InstallShaders("/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Shaders/toon.vert", "/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Shaders/toon.frag")) {
           throw Exception("Could not install shader!");
         }
         else {
             _shader[2]->Enable();
-            _shader[2]->SetUniformVariable4f("default_outline_color", 1.0f, 1.0f, 1.0f, 1.0f);
+            // _shader[2]->SetUniformVariable4f("default_outline_color", 1.0f, 1.0f, 1.0f, 1.0f);
             _shader[2]->Disable();
         }
 
-        if (!_shader[3]->InstallShaders("Shaders/reflection_lines.vert", "Shaders/reflection_lines.frag")) {
+        if (!_shader[3]->InstallShaders("/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Shaders/reflection_lines.vert", "/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Shaders/reflection_lines.frag")) {
           throw Exception("Could not install shader!");
         }
         else {
@@ -1209,4 +1226,49 @@ namespace cagd
             _shader[3]->Disable();
         }
     }
+
+    void GLWidget::setShaderOnOrOff(bool on){
+      _show_shader=on;
+      updateGL();
+    }
+
+    void GLWidget::changeSelectedShader(int shaderIndex){
+      if(shaderIndex<0 || shaderIndex>=4)return;
+      _shader_to_show=shaderIndex;
+      updateGL();
+    }
+
+    void GLWidget::shaderChangeReflectionScale(double s){
+      _shader[3]->Enable();
+      _shader[3]->SetUniformVariable1f("scale_factor", s);
+      _shader[3]->Disable();
+      updateGL();
+    }
+    void GLWidget::shaderChangeReflectionSmoothing(double s){
+      _shader[3]->Enable();
+      _shader[3]->SetUniformVariable1f("smoothing", s);
+      _shader[3]->Disable();
+      updateGL();
+
+    }
+    void GLWidget::shaderChangeReflectionShading(double s){
+      _shader[3]->Enable();
+      _shader[3]->SetUniformVariable1f("shading", s);
+      _shader[3]->Disable();
+      updateGL();
+    }
+
+    void GLWidget:: shaderChangeToonOutline(){
+      double x,y,z,alpha;
+      x = _sideWidget->ShaderToonOutline0->value();
+      y = _sideWidget->ShaderToonOutline1->value();
+      z = _sideWidget->ShaderToonOutline2->value();
+      alpha = _sideWidget->ShaderToonOutline3->value();
+
+      _shader[2]->Enable();
+      _shader[2]->SetUniformVariable4f("default_outline_color",x, y, z, alpha);
+      _shader[2]->Disable();
+      updateGL();
+    }
 }
+
