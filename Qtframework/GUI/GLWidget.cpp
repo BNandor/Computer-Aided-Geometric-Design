@@ -36,6 +36,10 @@ namespace cagd
 //          }break;
 //      }
 
+        for(GLuint i = 0; i < 4; ++i) {
+            _shader[i] = new ShaderProgram();
+        }
+
     initialize_curves();
     _timer = new QTimer(this);
                   _timer->setInterval(0);
@@ -199,16 +203,16 @@ namespace cagd
 
             //Testing dynamic vertex buffer objects
             //if(currentHomework == DynamicVBO){
-                if(_mouse.LoadFromOFF("/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Models/elephant.off",true)){//miert nem megy relativ pathel ?
-                  if(_mouse.UpdateVertexBufferObjects((GL_DYNAMIC_DRAW))){
-                      _angle=0.0;
-                      _timer->start();
-                      cout<<"started timer"<<endl;
-                    }
+//                if(_mouse.LoadFromOFF("/home/nandor/egyetem4/cs-bsc-ii-2/Grafika/build-QtFramework-Desktop_Qt_5_12_1_GCC_64bit-Debug/Models/elephant.off",true)){//miert nem megy relativ pathel ?
+//                  if(_mouse.UpdateVertexBufferObjects((GL_DYNAMIC_DRAW))){
+//                      _angle=0.0;
+//                      _timer->start();
+//                      cout<<"started timer"<<endl;
+//                    }
 
-                  }else{
-                    cout<<"could not read off"<<endl;
-                  }
+//                  }else{
+//                    cout<<"could not read off"<<endl;
+//                  }
            // }
             //Testing Parametric surface
             //if(currentHomework == ParametricSurface){
@@ -356,6 +360,10 @@ namespace cagd
 //              if(!compositeCurve->insert(2,2,_curve1,0.2)){
 //                  std::cout<<"Error inserting arc"<<endl;
 //              }
+
+              // shaders
+
+              installShaders();
             //eof mine
 
         }
@@ -552,7 +560,14 @@ namespace cagd
         }
         if(currentHomework == CompositePatch){
             if(compositePatch){
+                if(_show_shader) {
+                    _shader[_shader_to_show]->Enable();
+                }
                compositePatch->renderAll();
+
+               if(_show_shader) {
+                   _shader[_shader_to_show]->Disable();
+               }
             }
         }
         //EOF Testing dynamic vertex buffers
@@ -1162,6 +1177,36 @@ namespace cagd
           compositePatch->merge(firstId,secondId,
                                 (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchMergeFirstDirection->currentIndex()),
                                 (HyperbolicCompositePatch3::Direction)(_sideWidget->PatchMergeSecondDirection->currentIndex()));
+        }
+    }
+
+    void GLWidget::installShaders() {
+        if (!_shader[0]->InstallShaders("Shaders/directional_light.vert", "Shaders/directional_light.frag")) {
+          throw Exception("Could not install shader!");
+        }
+
+        if (!_shader[1]->InstallShaders("Shaders/two_sided_lighting.vert", "Shaders/two_sided_lighting.frag")) {
+          throw Exception("Could not install shader!");
+        }
+
+        if (!_shader[2]->InstallShaders("Shaders/toon.vert", "Shaders/toon.frag")) {
+          throw Exception("Could not install shader!");
+        }
+        else {
+            _shader[2]->Enable();
+            _shader[2]->SetUniformVariable4f("default_outline_color", 1.0f, 1.0f, 1.0f, 1.0f);
+            _shader[2]->Disable();
+        }
+
+        if (!_shader[3]->InstallShaders("Shaders/reflection_lines.vert", "Shaders/reflection_lines.frag")) {
+          throw Exception("Could not install shader!");
+        }
+        else {
+            _shader[3]->Enable();
+            _shader[3]->SetUniformVariable1f("scale_factor", 4.0f);
+            _shader[3]->SetUniformVariable1f("smoothing", 2.0f);
+            _shader[3]->SetUniformVariable1f("shading", 1.0f);
+            _shader[3]->Disable();
         }
     }
 }

@@ -13,6 +13,7 @@
 #include "../Cyclic/CyclicCurves3.h"
 #include "../Hyperbolic/HyperbolicCompositeCurves3.h"
 #include "../Hyperbolic/HyperbolicCompositePatch3.h"
+#include "../Core/ShaderPrograms.h"
 
 namespace cagd
 {
@@ -66,6 +67,12 @@ namespace cagd
       RowMatrix<GenericCurve3*>* UISOLINES;
       RowMatrix<GenericCurve3*>* VISOLINES;
       HomeWork currentHomework=CompositePatch;
+
+      // shaders
+      int                  _shader_to_show = 1;
+      bool                 _show_shader = true;
+      ShaderProgram*       _shader[4];
+
       //Project
         //CompositeCurves
          Material patchMaterials[3];
@@ -90,6 +97,9 @@ namespace cagd
         void updateXYZ(int, int);
         void updatePatchXYZ(int, int, int);
         SideWidget * _sideWidget;
+
+        // shaders
+        void installShaders();
     public slots:
         // public event handling methods/slots
         void set_angle_x(int value);

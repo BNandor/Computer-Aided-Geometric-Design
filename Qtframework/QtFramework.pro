@@ -60,6 +60,7 @@ FORMS += \
     GUI/SideWidget.ui
 
 HEADERS += \
+    Core/ShaderPrograms.h \
     GUI/GLWidget.h \
     GUI/MainWindow.h \
     GUI/SideWidget.h \
@@ -90,6 +91,7 @@ HEADERS += \
     Hyperbolic/IndicatingSphere.h
 
 SOURCES += \
+    Core/ShaderPrograms.cpp \
     GUI/GLWidget.cpp \
     GUI/MainWindow.cpp \
     GUI/SideWidget.cpp \
