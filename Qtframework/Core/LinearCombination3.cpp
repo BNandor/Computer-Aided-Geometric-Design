@@ -215,23 +215,21 @@ GenericCurve3* LinearCombination3::GenerateImage(GLuint max_order_of_derivatives
   if (!result)
       {
       return nullptr;
-      }
-
+      }  
   // set derivatives at the endpoints of the parametric curve
   for (GLuint order = 0; order < max_order_of_derivatives+1; ++order)
   {
       if(!CalculateDerivatives(max_order_of_derivatives,_u_min,_derivatives)){
           delete result;
           return nullptr;
-      }
+      }      
       (*result)(order, 0) = _derivatives[order];
       if(! CalculateDerivatives(max_order_of_derivatives,_u_max,_derivatives)){
           delete result;
           return nullptr;
-      }
-      (*result)(order, div_point_count - 1) = _derivatives[order];
-  }
-
+      }      
+      (*result)(order, div_point_count - 1) = _derivatives[order];      
+  }  
   // calculate derivatives at inner curve points
   GLdouble u_step = (_u_max - _u_min) / (div_point_count - 1);
   GLdouble u = _u_min;
@@ -248,8 +246,7 @@ GenericCurve3* LinearCombination3::GenerateImage(GLuint max_order_of_derivatives
           }
           (*result)(order, i) = _derivatives[order];
       }
-  }
-
+  }  
   return result;
 }
 

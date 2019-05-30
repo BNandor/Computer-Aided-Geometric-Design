@@ -67,7 +67,7 @@ namespace cagd
       TriangulatedMesh3* hyperbolicPatch3InterpolationImage;
       RowMatrix<GenericCurve3*>* UISOLINES;
       RowMatrix<GenericCurve3*>* VISOLINES;
-      HomeWork currentHomework=CompositePatch;
+      HomeWork currentHomework=CompositeCurve;
 
       // shaders
       int                  _shader_to_show = 1;
@@ -129,7 +129,7 @@ namespace cagd
         void mergeArcs();
           // sphere stuff
           void updateSpheresOnArcSelected(int);
-        //Patches
+        // Patches
         void insertPatch();
         void insertPatchX();
         void insertPatchY();
@@ -148,14 +148,21 @@ namespace cagd
         void updateSelectionCurveOnJoinSecond();
         void updateSelectionCurveOnMergeFirst();
         void updateSelectionCurveOnMergeSecond();
-        // shader stu
+
+        // Isoparametric stuff
+        void togglePatchUIso(bool);
+        void togglePatchVIso(bool);
+
+        // Shader stuff
         void setShaderOnOrOff(bool);
         void changeSelectedShader(int);
         void shaderChangeReflectionScale(double);
         void shaderChangeReflectionSmoothing(double);
         void shaderChangeReflectionShading(double);
         void shaderChangeToonOutline();
-
+        //Persistence
+        void saveArcs();
+        void readArcs();
    private slots:
         void _animate();//Testing dynamic vertex buffer objects
     };

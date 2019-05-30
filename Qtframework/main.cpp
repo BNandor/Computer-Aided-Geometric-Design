@@ -2,6 +2,7 @@
 #include "GUI/MainWindow.h"
 #include "Core/Matrices.h"
 #include <iostream>
+#include <unistd.h>
 
 using namespace std;
 
@@ -31,5 +32,8 @@ int main(int argc, char **argv)
 //    cout << M << endl;
 
     // running the application
+    char cwd[1024];
+    getcwd(cwd, sizeof(cwd));
+    printf("Current working dir: %s\n", cwd);
     return app.exec();
 }

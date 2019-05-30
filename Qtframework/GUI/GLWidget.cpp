@@ -1270,5 +1270,50 @@ namespace cagd
       _shader[2]->Disable();
       updateGL();
     }
+
+    void GLWidget::togglePatchUIso(bool on){
+      if(compositePatch){
+          int patchIndex = _sideWidget->PatchIsoPatchIndex->value();
+          int lineCount = _sideWidget->PatchIsoUcount->value();
+          if(on){
+              compositePatch->setULines(patchIndex,lineCount);
+            }else{
+              compositePatch->clearULines(patchIndex);
+            }
+          updateGL();
+        }
+    }
+
+    void GLWidget::togglePatchVIso(bool on){
+      if(compositePatch){
+          int patchIndex = _sideWidget->PatchIsoPatchIndex->value();
+          int lineCount = _sideWidget->PatchIsoVcount->value();
+          if(on){
+              compositePatch->setVLines(patchIndex,lineCount);
+            }else{
+              compositePatch->clearVLines(patchIndex);
+            }
+          updateGL();
+        }
+    }
+
+    void GLWidget::saveArcs(){
+      if(compositeCurve){
+          string empty = "";
+          if(_sideWidget->ArcFilename->text().toUtf8().constData() != empty){
+            compositeCurve->saveToFile(_sideWidget->ArcFilename->text().toUtf8().constData());
+          }
+        }
+    }
+    void GLWidget::readArcs(){      
+      if(!compositeCurve){
+          compositeCurve = new HyperbolicCompositeCurve3(MAX_CURVE_COUNT);
+      }
+      string empty = "";
+      if(_sideWidget->ArcFilenameToRead->text().toUtf8().constData() != empty){
+         compositeCurve->readFromFile(_sideWidget->ArcFilenameToRead->text().toUtf8().constData());
+         updateGL();
+      }
+    }
 }
 

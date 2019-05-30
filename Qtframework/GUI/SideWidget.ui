@@ -431,7 +431,7 @@
     </rect>
    </property>
    <property name="currentIndex">
-    <number>2</number>
+    <number>0</number>
    </property>
    <widget class="QWidget" name="arc_tab">
     <attribute name="title">
@@ -447,7 +447,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>6</number>
      </property>
      <widget class="QWidget" name="arc_insert_tab">
       <attribute name="title">
@@ -1171,6 +1171,91 @@
        </item>
       </widget>
      </widget>
+     <widget class="QWidget" name="tab_11">
+      <attribute name="title">
+       <string>Save</string>
+      </attribute>
+      <widget class="QLineEdit" name="ArcFilename">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>30</y>
+         <width>113</width>
+         <height>22</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_57">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Filename</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ArcSaveButton">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>30</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Save</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_12">
+      <attribute name="title">
+       <string>Open</string>
+      </attribute>
+      <widget class="QLabel" name="label_58">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>30</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Filename</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="ArcFilenameToRead">
+       <property name="geometry">
+        <rect>
+         <x>100</x>
+         <y>30</y>
+         <width>113</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="ArcOpenButton">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>30</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Open</string>
+       </property>
+      </widget>
+     </widget>
     </widget>
    </widget>
    <widget class="QWidget" name="surface_tab">
@@ -1187,7 +1272,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>1</number>
+      <number>5</number>
      </property>
      <widget class="QWidget" name="arc_insert_tab_2">
       <attribute name="title">
@@ -2626,6 +2711,106 @@
        </property>
        <property name="maximum">
         <number>4</number>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_10">
+      <attribute name="title">
+       <string>IsoParametric</string>
+      </attribute>
+      <widget class="QSpinBox" name="PatchIsoPatchIndex">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>10</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_54">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>81</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Patch Index</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="PatchIsoUCheckBox">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>40</y>
+         <width>85</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>U Iso</string>
+       </property>
+      </widget>
+      <widget class="QCheckBox" name="PatchIsoVCheckBox">
+       <property name="geometry">
+        <rect>
+         <x>140</x>
+         <y>70</y>
+         <width>85</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>V Iso</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="PatchIsoUcount">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>40</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_55">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>40</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>count</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_56">
+       <property name="geometry">
+        <rect>
+         <x>230</x>
+         <y>70</y>
+         <width>59</width>
+         <height>14</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>count</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="PatchIsoVcount">
+       <property name="geometry">
+        <rect>
+         <x>310</x>
+         <y>70</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
        </property>
       </widget>
      </widget>

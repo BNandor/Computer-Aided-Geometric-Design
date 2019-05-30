@@ -1051,6 +1051,21 @@ void HyperbolicCompositePatch3::renderAll(){
           glDisable(GL_LIGHTING);
           glDisable(GL_LIGHT0);
           glDisable(GL_NORMALIZE);
+          //render u,v isoparametric lines
+           glColor3f(0.2f,0.6f,0.6f);
+          if(_patches[i]->ulines){
+              for (int t=0;t<_patches[i]->ulines->GetColumnCount();++t) {
+                (*_patches[i]->ulines)[t]->RenderDerivatives(0,GL_LINE_STRIP);
+                (*_patches[i]->ulines)[t]->RenderDerivatives(1,GL_LINES);
+                }
+            }
+          glColor3f(0.1f,0.7f,0.6f);
+          if(_patches[i]->vlines){
+              for (int t=0;t<_patches[i]->vlines->GetColumnCount();++t) {
+                (*_patches[i]->vlines)[t]->RenderDerivatives(0,GL_LINE_STRIP);
+                (*_patches[i]->vlines)[t]->RenderDerivatives(1,GL_LINES);
+                }
+            }
     }
   }
 }

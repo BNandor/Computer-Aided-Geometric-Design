@@ -42,13 +42,14 @@ namespace cagd{
     arcattr->arc = new HyperbolicArc3(alpha);
     for(int i=0;i<4;i++){
       (*(arcattr->arc))[i] =_data[i];
-    }
-    if(!arcattr->arc->UpdateVertexBufferObjectsOfData())return GL_FALSE;
-    if(!arcattr->generateImage(max_order_of_derivatives))return GL_FALSE;
+    }        
+    if(!arcattr->arc->UpdateVertexBufferObjectsOfData())return GL_FALSE;    
+    if(!arcattr->generateImage(max_order_of_derivatives))return GL_FALSE;    
     if(!arcattr->updateVBO(scale))return GL_FALSE;
+    cout<<"1"<<endl;
     arcattr->color=new Color4(color);
     arcattr->derivatives_color=new Color4(0.0,0.5,0.0);
-     _arcs[_arc_count]=arcattr;
+     _arcs[_arc_count]=arcattr;     
      _arc_count++;     
      return GL_TRUE;
   }
@@ -71,12 +72,12 @@ namespace cagd{
 
     if(!insert(alpha,max_order_derivative,coords,scale))return GL_FALSE;
     if(direction == Right){
-      _arcs[id]->next = _arcs[_arc_count-1];
-      _arcs[_arc_count-1]->previous = _arcs[id];
+      _arcs[id]->next = _arcs[_arc_count-1];      
       }else{
-        _arcs[id]->previous = _arcs[_arc_count-1];
-        _arcs[_arc_count-1]->next= _arcs[id];
+       _arcs[id]->previous = _arcs[_arc_count-1];
+//       _arcs[_arc_count-1]->next= _arcs[id];
       }
+    _arcs[_arc_count-1]->previous = _arcs[id];
     return GL_TRUE;
   }
 

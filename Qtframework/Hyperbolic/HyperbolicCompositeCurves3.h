@@ -5,6 +5,7 @@
 #include "../Core/Colors4.h"
 #include "./IndicatingSphere.h"
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -64,7 +65,75 @@ namespace cagd {
     void updateSpheresLocationByindex(GLuint index);
     void renderAll(GLuint max_order_of_derivatives);
     ~HyperbolicCompositeCurve3();
-  };  
+    int getNeighbourIndex(ArcAttributes* neighbour){
+      for (int i=0;i<_arc_count;++i) {
+          if(_arcs[i]==neighbour)
+            return i;
+        }
+      return -1;
+    }
+    void saveToFile(string filename){
+      ofstream file;
+      file.open((filename).c_str());
+      if(!file.is_open()){
+          cerr<<"error creating "<<filename<<endl;
+          return;
+        }
+      file<<_arc_count<<endl;
+      for (int i = 0; i < _arc_count; ++i) {
+          for (int j=0;j<4;++j) {
+            file<<_arcs[i]->arc->operator[](j);
+            file<<endl;
+          }
+      }
+
+      for (int i = 0; i < _arc_count; ++i) {
+          file<<i<<" "<<getNeighbourIndex(_arcs[i]->previous)<<endl;
+          file<<i<<" "<<getNeighbourIndex(_arcs[i]->next)<<endl;
+      }
+      file.close();
+      cout<<"File saved"<<endl;
+    }
+
+    void readFromFile(string filename){
+      cout<<"reading from"<<filename<<endl;
+      ifstream file;
+      file.open((filename).c_str());
+      if(!file.is_open()){
+        cerr<<filename<<" could not be opened"<<endl;
+        return;
+        }
+      int was = _arc_count;
+      _arc_count=0;
+      for(int i=0;i<was;++i){
+          if(_arcs[i])
+            delete _arcs[i];
+      }
+      int num_of_arcs;
+      file>>num_of_arcs;
+      cout<<num_of_arcs<<endl;
+
+      ColumnMatrix<DCoordinate3> points(4);
+      for (int i = 0; i < num_of_arcs; ++i) {
+          for(int j=0;j<4;++j){
+          file>>points[j];
+          cout<<points[j]<<endl;
+          }
+          insert(5, 1, points,0.6,Color4(0,0,1));
+      }
+      int index,neighboureIndex;
+      for (int i = 0; i < num_of_arcs; ++i) {
+        file>>index>>neighboureIndex;
+        if(neighboureIndex!=-1){
+          _arcs[index]->previous=_arcs[neighboureIndex];
+          }
+        file>>index>>neighboureIndex;
+        if(neighboureIndex!=-1){
+          _arcs[index]->next=_arcs[neighboureIndex];
+          }
+      }
+    }
+  };
 }
 #endif // HYPERBOLICCOMPOSITECURVES3_H
 

@@ -29,8 +29,14 @@ namespace cagd {
         Material  material;
         Color4 * derivatives_color;
         PatchAttributes* neighbours[8];
+
+        RowMatrix<GenericCurve3*>* ulines;
+        RowMatrix<GenericCurve3*>* vlines;
+
         PatchAttributes():patch(0),img(0),material(MatFBEmerald){
           memset(neighbours,0,8*sizeof(PatchAttributes*));
+          ulines=0;
+          vlines=0;
         }
         PatchAttributes(const PatchAttributes & other);
         PatchAttributes& operator=(const PatchAttributes & other);
@@ -39,6 +45,49 @@ namespace cagd {
         GLboolean generateImage(){
           img = patch->GenerateImage(div_point_count,div_point_count);
           return img != 0;
+        }
+
+        void generatUIsoparametricLines(int line_count){
+          if(!patch){
+              cerr<<"Error, patch is null"<<endl;return;
+            }
+          if(ulines)delete ulines;
+          ulines=patch->GenerateUIsoparametricLines(line_count,1,100);
+          if(!ulines){
+              cerr<<"Error, ulines is null"<<endl;return;
+            }
+          for (int i=0;i<line_count;++i) {
+              ((*ulines)[i])->UpdateVertexBufferObjects(0.4);
+            }
+        }
+
+        void generatVIsoparametricLines(int line_count){
+          if(!patch){
+              cerr<<"Error, patch is null"<<endl;return;
+            }
+          if(vlines)delete vlines;
+          vlines=patch->GenerateVIsoparametricLines(line_count,1,100);
+          for (int i=0;i<line_count;++i) {
+              ((*vlines)[i])->UpdateVertexBufferObjects(0.4);
+            }
+        }
+        void clearULines(){
+          if(ulines){
+              for (int i=0;i<ulines->GetColumnCount();++i) {
+                  delete (*ulines)[i];
+                }
+              delete ulines;
+              ulines=0;
+            }
+        }
+        void clearVLines(){
+          if(vlines){
+              for (int i=0;i<vlines->GetColumnCount();++i) {
+                  delete (*vlines)[i];
+                }
+              delete vlines;
+              vlines=0;
+            }
         }
         GLboolean updateVBO(){
            if(!img)return GL_FALSE;
@@ -156,12 +205,50 @@ namespace cagd {
       default_derivatives_colour=Color4(0,0.5,0);
       sphere = new IndicatingSphere(0.02);
     }
+
     GLboolean insert(GLdouble alpha,GLuint max_order_of_derivatives,const ColumnMatrix<DCoordinate3>& _data,Material material=MatFBEmerald);
     GLboolean continueExisting(GLuint id,Direction direction,GLdouble alpha,Material material);
     GLuint join(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection);
     GLuint merge(GLuint firstId, GLuint SecondID,Direction firstDirection,Direction secondDirection);
     GLboolean update(int i,int j,int patchindex,DCoordinate3 newcoord);
     GLboolean updatePatchForRendering( PatchAttributes*);
+
+    void setULines(int patchIndex,int lineCount){
+      if(patchIndex<0 || patchIndex>=_patch_count){
+          cerr<<"Invalid patch index"<<endl;
+          return;
+        }
+      if(lineCount<=0){
+          cerr<<"Invalid line count"<<endl;
+          return;
+        }
+      _patches[patchIndex]->generatUIsoparametricLines(lineCount);
+    }
+    void setVLines(int patchIndex,int lineCount){
+      if(patchIndex<0 || patchIndex>=_patch_count){
+          cerr<<"Invalid patch index"<<endl;
+          return;
+        }
+      if(lineCount<=0){
+          cerr<<"Invalid line count"<<endl;
+          return;
+        }
+      _patches[patchIndex]->generatVIsoparametricLines(lineCount);
+    }
+    void clearULines(int patchIndex){
+      if(patchIndex<0 || patchIndex>=_patch_count){
+          cerr<<"Invalid patch index"<<endl;
+          return;
+        }
+      _patches[patchIndex]->clearULines();
+    }
+    void clearVLines(int patchIndex){
+      if(patchIndex<0 || patchIndex>=_patch_count){
+          cerr<<"Invalid patch index"<<endl;
+          return;
+        }
+      _patches[patchIndex]->clearVLines();
+    }
     void renderAll();
     ~HyperbolicCompositePatch3();
   };

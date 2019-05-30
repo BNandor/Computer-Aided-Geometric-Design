@@ -99,6 +99,9 @@ namespace cagd
         connect(_side_widget->PatchTransformY,SIGNAL(valueChanged(double)),_gl_widget,SLOT(transformPatchY()));
         connect(_side_widget->PatchTransformZ,SIGNAL(valueChanged(double)),_gl_widget,SLOT(transformPatchZ()));
         connect(_side_widget->PatchMergeButton, SIGNAL(clicked()),_gl_widget,SLOT(mergePatches()));
+        //Isoparametric stuff
+        connect(_side_widget->PatchIsoUCheckBox, SIGNAL(clicked(bool)),_gl_widget,SLOT(togglePatchUIso(bool)));
+        connect(_side_widget->PatchIsoVCheckBox, SIGNAL(clicked(bool)),_gl_widget,SLOT(togglePatchVIso(bool)));
         // Shader stuff
         connect(_side_widget->ShaderCheckbox, SIGNAL(clicked(bool)),_gl_widget,SLOT(setShaderOnOrOff(bool)));
         connect(_side_widget->ShaderComboBox, SIGNAL(currentIndexChanged(int)),_gl_widget,SLOT(changeSelectedShader(int)));
@@ -111,6 +114,12 @@ namespace cagd
 
         // Toon stuff
         connect(_side_widget->ShaderToonButtonOk, SIGNAL(clicked()),_gl_widget,SLOT( shaderChangeToonOutline()));
+
+        //Persistence
+        //Save arcs
+        connect(_side_widget->ArcSaveButton, SIGNAL(clicked()),_gl_widget,SLOT( saveArcs()));
+        //Read arcs
+        connect(_side_widget->ArcOpenButton, SIGNAL(clicked()),_gl_widget,SLOT( readArcs()));
     }
 
     //--------------------------------

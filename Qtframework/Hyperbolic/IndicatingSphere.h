@@ -21,7 +21,9 @@ namespace  cagd {
     }
     ~IndicatingSphere(){
       if(surface)delete surface;
+      surface=0;
       if(_image)delete _image;
+      _image=0;
     }
     GLboolean updateImage(DCoordinate3 offset){
       if(!surface){
