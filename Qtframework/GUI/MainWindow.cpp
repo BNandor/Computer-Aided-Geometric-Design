@@ -120,6 +120,9 @@ namespace cagd
         connect(_side_widget->ArcSaveButton, SIGNAL(clicked()),_gl_widget,SLOT( saveArcs()));
         //Read arcs
         connect(_side_widget->ArcOpenButton, SIGNAL(clicked()),_gl_widget,SLOT( readArcs()));
+        connect(_side_widget->PatchSaveButton, SIGNAL(clicked()),_gl_widget,SLOT( savePatches()));
+        //Read Patchs
+        connect(_side_widget->PatchOpenButton, SIGNAL(clicked()),_gl_widget,SLOT( readPatches()));
     }
 
     //--------------------------------

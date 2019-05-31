@@ -87,7 +87,11 @@ namespace cagd
         std::vector<DCoordinate3>    _normal;
         std::vector<TCoordinate4>    _tex;
         std::vector<TriangularFace>  _face;
-
+        // My texture stuff
+        unsigned texture;
+        int height;
+        int width;
+        const char* textureImage ="texture.jpg";
     public:
         // special and default constructor
         TriangulatedMesh3(GLuint vertex_count = 0, GLuint face_count = 0, GLenum usage_flag = GL_STATIC_DRAW);

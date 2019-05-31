@@ -38,7 +38,7 @@ unix: !mac {
     message("Unix/Linux platform...")
 
     # for GLEW installed into /usr/lib/libGLEW.so or /usr/lib/glew.lib
-    LIBS += -lGLEW -lGLU
+    LIBS += -lGLEW -lGLU -lfreeimage
 }
 
 mac {
@@ -88,7 +88,9 @@ HEADERS += \
     Cyclic/CyclicCurves3.h \
     Hyperbolic/HyperbolicCompositeCurves3.h \
     Hyperbolic/HyperbolicCompositePatch3.h \
-    Hyperbolic/IndicatingSphere.h
+    Hyperbolic/IndicatingSphere.h \
+    Core/Texture/FreeImage.h \
+    Core/Texture/Texture.h
 
 SOURCES += \
     Core/ShaderPrograms.cpp \
@@ -110,5 +112,6 @@ SOURCES += \
     Hyperbolic/HyperbolicPatch3.cpp \
     Cyclic/CyclicCurve3.cpp \
     Hyperbolic/HyperbolicCompositeCurves3.cpp \
-    Hyperbolic/HyperbolicCompositePatch3.cpp
+    Hyperbolic/HyperbolicCompositePatch3.cpp \
+    Core/Texture/Texture.cpp
 

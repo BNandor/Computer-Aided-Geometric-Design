@@ -163,6 +163,9 @@ namespace cagd
         //Persistence
         void saveArcs();
         void readArcs();
+
+        void savePatches();
+        void readPatches();
    private slots:
         void _animate();//Testing dynamic vertex buffer objects
     };

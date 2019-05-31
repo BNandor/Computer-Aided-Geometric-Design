@@ -92,7 +92,7 @@ namespace cagd {
           file<<i<<" "<<getNeighbourIndex(_arcs[i]->next)<<endl;
       }
       file.close();
-      cout<<"File saved"<<endl;
+      cout<<"File"<<filename<<"saved"<<endl;
     }
 
     void readFromFile(string filename){

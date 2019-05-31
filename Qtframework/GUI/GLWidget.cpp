@@ -1315,5 +1315,26 @@ namespace cagd
          updateGL();
       }
     }
+    void GLWidget::savePatches(){
+      if(compositePatch){
+          string empty = "";
+          if(_sideWidget->PatchFilename->text().toUtf8().constData() != empty){
+            compositePatch->saveToFile(_sideWidget->PatchFilename->text().toUtf8().constData());
+          }
+        }
+    }
+    void GLWidget::readPatches(){
+      if(!compositePatch){
+          compositePatch = new HyperbolicCompositePatch3(MAX_PATCH_COUNT);
+          patchMaterials[0]=MatFBEmerald;
+          patchMaterials[1]=MatFBGold;
+          patchMaterials[2]=MatFBBrass;
+      }
+      string empty = "";
+      if(_sideWidget->PatchFilenameToRead->text().toUtf8().constData() != empty){
+         compositePatch->readFromFile(_sideWidget->PatchFilenameToRead->text().toUtf8().constData());
+         updateGL();
+      }
+    }
 }
 

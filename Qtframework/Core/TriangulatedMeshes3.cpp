@@ -4,16 +4,56 @@
 #include <limits>
 #include <algorithm>
 #include "TriangulatedMeshes3.h"
+#include "Texture/FreeImage.h"
 
 using namespace cagd;
 using namespace std;
-
+FREE_IMAGE_FORMAT GetFileFormat(const char * filename) {
+	FREE_IMAGE_FORMAT fif = FreeImage_GetFileType(filename, 0);
+	if (fif == FIF_UNKNOWN) {
+		fif = FreeImage_GetFIFFromFilename(filename);
+	}
+	return(fif);
+}
+FIBITMAP * GetFileContent(FREE_IMAGE_FORMAT fif, const char * filename) {
+	FIBITMAP * image = 0;
+	if (FreeImage_FIFSupportsReading(fif)) {
+		image = FreeImage_Load(fif, filename);
+	}
+	return(image);
+}
 TriangulatedMesh3::TriangulatedMesh3(GLuint vertex_count, GLuint face_count, GLenum usage_flag):
 	_usage_flag(usage_flag),
 	_vbo_vertices(0), _vbo_normals(0), _vbo_tex_coordinates(0), _vbo_indices(0),
 	_vertex(vertex_count), _normal(vertex_count), _tex(vertex_count),
 	_face(face_count)
 {
+  FREE_IMAGE_FORMAT ext = GetFileFormat(textureImage);
+  if (ext == FIF_UNKNOWN) {
+          throw("Invalid Texture File Format!");
+  }
+  FIBITMAP * content = GetFileContent(ext, textureImage);
+  if (!content) {
+          throw("Invalid Texture File Content!");
+  }
+  BYTE * data = FreeImage_GetBits(content);
+
+  height = FreeImage_GetHeight(content);
+  width = FreeImage_GetWidth(content);
+
+  int internal = FreeImage_GetBPP(content) / 8;
+  GLenum format = (internal == 4) ? GL_BGRA : GL_BGR;
+  GLenum type = GL_UNSIGNED_BYTE;
+
+  glGenTextures(1, &texture);
+  glBindTexture(GL_TEXTURE_2D, texture);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+  glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+  glTexImage2D(GL_TEXTURE_2D, 0, internal, width, height, 0, format, type, data);
+
+  FreeImage_Unload(content);
 }
 
 TriangulatedMesh3::TriangulatedMesh3(const TriangulatedMesh3 &mesh):
@@ -115,7 +155,10 @@ GLboolean TriangulatedMesh3::Render(GLenum render_mode) const
     glDisableClientState(GL_VERTEX_ARRAY);
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
-
+    //mine
+    glEnable(GL_TEXTURE_2D);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    //eof mine
     // unbind any buffer object previously bound and restore client memory usage
     // for these buffer object targets
     glBindBuffer(GL_ARRAY_BUFFER, 0);

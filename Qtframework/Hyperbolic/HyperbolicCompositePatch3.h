@@ -9,6 +9,7 @@
 #include "./IndicatingSphere.h"
 #include <string.h>
 #include <vector>
+#include <fstream>
 
 using namespace std;
 
@@ -251,6 +252,77 @@ namespace cagd {
     }
     void renderAll();
     ~HyperbolicCompositePatch3();
+    int getNeighbourIndex(PatchAttributes* neighbour){
+      for (int i=0;i<_patch_count;++i) {
+          if(_patches[i] == neighbour)
+            return i;
+        }
+      return -1;
+    }
+    void saveToFile(string filename){
+      ofstream file;
+      file.open((filename).c_str());
+      if(!file.is_open()){
+          cerr<<"error creating "<<filename<<endl;
+          return;
+        }
+      file<<_patch_count<<endl;
+      DCoordinate3 controlPoint;
+      for (int t = 0; t < _patch_count; ++t) {
+          for (int i=0;i<4;++i) {
+            for (int j=0;j<4;++j) {
+                _patches[t]->patch->GetData(i,j,controlPoint);
+              file<<controlPoint;
+              file<<endl;
+            }
+          }
+      }
+
+      for (int i = 0; i < _patch_count; ++i) {
+          for(int n=0; n < 8; n++){
+            file<<i<<" "<<getNeighbourIndex(_patches[i]->neighbours[n])<<endl;
+          }
+      }
+      file.close();
+      cout<<"File"<<filename<<"saved"<<endl;
+    }
+
+    void readFromFile(string filename){
+      cout<<"reading from"<<filename<<endl;
+      ifstream file;
+      file.open((filename).c_str());
+      if(!file.is_open()){
+        cerr<<filename<<" could not be opened"<<endl;
+        return;
+        }
+      int was = _patch_count;
+      _patch_count=0;
+      for(int i=0;i<was;++i){
+          if(_patches[i])
+            delete _patches[i];
+      }
+      int num_of_patches;
+      file>>num_of_patches;
+      cout<<num_of_patches<<endl;
+      ColumnMatrix<DCoordinate3> points(16);
+      for (int i = 0; i < num_of_patches; ++i) {
+          for(int j=0;j<16;++j){
+          file>>points[j];
+          cout<<points[j]<<endl;
+          }
+          insert(5,1,points);
+      }
+
+      int index,neighboureIndex;
+      for (int i = 0; i < num_of_patches; ++i) {
+        for(int n=0; n < 8; n++){
+          file>>index>>neighboureIndex;
+          if(neighboureIndex!=-1){
+            _patches[index]->neighbours[n]=_patches[neighboureIndex];
+          }
+        }
+      }
+    }
   };
 }
 
