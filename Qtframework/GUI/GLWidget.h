@@ -67,7 +67,7 @@ namespace cagd
       TriangulatedMesh3* hyperbolicPatch3InterpolationImage;
       RowMatrix<GenericCurve3*>* UISOLINES;
       RowMatrix<GenericCurve3*>* VISOLINES;
-      HomeWork currentHomework=CompositeCurve;
+      HomeWork currentHomework=CompositePatch;
 
       // shaders
       int                  _shader_to_show = 1;
@@ -166,6 +166,11 @@ namespace cagd
 
         void savePatches();
         void readPatches();
+
+        //Textures
+        void applyTexture();
+        void disableTexture();
+
    private slots:
         void _animate();//Testing dynamic vertex buffer objects
     };

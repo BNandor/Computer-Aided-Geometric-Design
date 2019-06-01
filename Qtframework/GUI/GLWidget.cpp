@@ -1336,5 +1336,25 @@ namespace cagd
          updateGL();
       }
     }
+
+    void GLWidget::applyTexture(){
+      if(compositePatch){
+        int currentPatch = _sideWidget->PatchTexturePatchIndex->value();
+        string textureFilename = _sideWidget->PatchTextureFilename->text().toUtf8().constData();
+        string empty = "";
+        if(textureFilename != empty){
+          compositePatch->applyTexture(currentPatch,textureFilename);
+          updateGL();
+        }
+      }
+    }
+
+    void GLWidget::disableTexture(){
+      if(compositePatch){
+        int currentPatch = _sideWidget->PatchTexturePatchIndex->value();
+          compositePatch->disableTexture(currentPatch);
+          updateGL();
+      }
+    }
 }
 

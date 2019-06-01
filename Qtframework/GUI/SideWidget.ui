@@ -1272,7 +1272,7 @@
       </rect>
      </property>
      <property name="currentIndex">
-      <number>6</number>
+      <number>7</number>
      </property>
      <widget class="QWidget" name="arc_insert_tab_2">
       <attribute name="title">
@@ -2891,6 +2891,86 @@
        </property>
        <property name="text">
         <string>Open</string>
+       </property>
+      </widget>
+     </widget>
+     <widget class="QWidget" name="tab_14">
+      <attribute name="title">
+       <string>Texturing</string>
+      </attribute>
+      <widget class="QLabel" name="label_61">
+       <property name="geometry">
+        <rect>
+         <x>-2</x>
+         <y>50</y>
+         <width>91</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Texture Path</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="PatchTextureFilename">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>50</y>
+         <width>113</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="PatchApplyButton">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>50</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Apply</string>
+       </property>
+      </widget>
+      <widget class="QSpinBox" name="PatchTexturePatchIndex">
+       <property name="geometry">
+        <rect>
+         <x>120</x>
+         <y>10</y>
+         <width>47</width>
+         <height>23</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_62">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>10</y>
+         <width>81</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Patch Index</string>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="PatchDisableButton">
+       <property name="geometry">
+        <rect>
+         <x>260</x>
+         <y>10</y>
+         <width>80</width>
+         <height>22</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Disable</string>
        </property>
       </widget>
      </widget>

@@ -123,6 +123,9 @@ namespace cagd
         connect(_side_widget->PatchSaveButton, SIGNAL(clicked()),_gl_widget,SLOT( savePatches()));
         //Read Patchs
         connect(_side_widget->PatchOpenButton, SIGNAL(clicked()),_gl_widget,SLOT( readPatches()));
+        //Texture application,disabling
+        connect(_side_widget->PatchApplyButton, SIGNAL(clicked()),_gl_widget,SLOT( applyTexture()));
+        connect(_side_widget->PatchDisableButton, SIGNAL(clicked()),_gl_widget,SLOT( disableTexture()));
     }
 
     //--------------------------------

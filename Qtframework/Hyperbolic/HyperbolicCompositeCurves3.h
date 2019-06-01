@@ -33,6 +33,7 @@ namespace cagd {
         ~ArcAttributes();
 
         GLboolean generateImage(GLuint max_order_of_derivatives){
+          if(img)delete img;
           img = arc->GenerateImage(max_order_of_derivatives,div_point_count);
           return img != 0;
         }

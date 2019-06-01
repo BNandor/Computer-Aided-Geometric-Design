@@ -10,6 +10,7 @@
 #include <string.h>
 #include <vector>
 #include <fstream>
+#include "../Core/Texture/FreeImage.h"
 
 using namespace std;
 
@@ -25,8 +26,13 @@ namespace cagd {
 
     class PatchAttributes{
     public:
+
         HyperbolicPatch3 * patch;
         TriangulatedMesh3 * img;
+        GLboolean renderTexture;
+        string currentTextureFilename;
+        FIBITMAP * textureContent;
+        BYTE * textureData;
         Material  material;
         Color4 * derivatives_color;
         PatchAttributes* neighbours[8];
@@ -34,7 +40,7 @@ namespace cagd {
         RowMatrix<GenericCurve3*>* ulines;
         RowMatrix<GenericCurve3*>* vlines;
 
-        PatchAttributes():patch(0),img(0),material(MatFBEmerald){
+        PatchAttributes():patch(0),img(0),material(MatFBEmerald),renderTexture(false),textureContent(0),textureData(0){
           memset(neighbours,0,8*sizeof(PatchAttributes*));
           ulines=0;
           vlines=0;
@@ -44,7 +50,11 @@ namespace cagd {
         ~PatchAttributes();
 
         GLboolean generateImage(){
+          if(img)delete img;
           img = patch->GenerateImage(div_point_count,div_point_count);
+          if(renderTexture && img && textureContent && textureData){
+              img->bindTextureImage(textureContent,textureData);
+            }
           return img != 0;
         }
 
@@ -322,6 +332,61 @@ namespace cagd {
           }
         }
       }
+    }
+    FREE_IMAGE_FORMAT GetFileFormat(const char * filename);
+    FIBITMAP * GetFileContent(FREE_IMAGE_FORMAT fif, const char * filename);
+
+    void loadTextureData(GLuint patchIndex,string filename){
+      if(_patches[patchIndex]->textureContent){
+         FreeImage_Unload(_patches[patchIndex]->textureContent);
+        }
+      if(patchIndex >= _patch_count){
+          cerr<<"Error in applying texture, invalid index"<<endl;
+          return;
+        }
+      FREE_IMAGE_FORMAT ext = GetFileFormat(filename.c_str());
+        if (ext == FIF_UNKNOWN) {
+                cerr<<"Invalid Texture File Format!"<<endl;
+                return;
+        }
+        _patches[patchIndex]->textureContent = GetFileContent(ext, filename.c_str());
+        if (!_patches[patchIndex]->textureContent) {
+                throw("Invalid Texture File Content!");
+        }
+     _patches[patchIndex]->textureData = FreeImage_GetBits(_patches[patchIndex]->textureContent);
+    }
+
+    GLboolean applyTexture(GLuint patchIndex, std::string filename){
+      if(patchIndex >= _patch_count){
+          cerr<<"Error in applying texture, invalid index"<<endl;
+          return GL_FALSE;
+        }
+      ifstream file;
+      file.open(filename.c_str());
+      if(!file.is_open()){
+          cerr<<filename<<" could not be read"<<endl;
+          file.close();
+          return GL_FALSE;
+      }
+      file.close();
+      if(_patches[patchIndex]->img){
+          loadTextureData(patchIndex,filename);
+          if(!_patches[patchIndex]->img->bindTextureImage(_patches[patchIndex]->textureContent,_patches[patchIndex]->textureData)){
+              return GL_FALSE;
+            }
+          _patches[patchIndex]->renderTexture=true;
+          _patches[patchIndex]->currentTextureFilename=filename;
+      }else{
+          cerr<<"Error in applying texture, invalid img pointer"<<endl;
+          return GL_FALSE;
+        }
+    }
+    void disableTexture(GLuint patchIndex){
+      if(patchIndex >= _patch_count){
+          cerr<<"Error in applying texture, invalid index"<<endl;
+          return;
+      }
+      _patches[patchIndex]->renderTexture=false;
     }
   };
 }

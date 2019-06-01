@@ -7,6 +7,7 @@
 #include "TriangularFaces.h"
 #include "TCoordinates4.h"
 #include <vector>
+#include "Texture/FreeImage.h"
 
 namespace cagd
 {    
@@ -91,7 +92,6 @@ namespace cagd
         unsigned texture;
         int height;
         int width;
-        const char* textureImage ="texture.jpg";
     public:
         // special and default constructor
         TriangulatedMesh3(GLuint vertex_count = 0, GLuint face_count = 0, GLenum usage_flag = GL_STATIC_DRAW);
@@ -106,7 +106,8 @@ namespace cagd
         GLvoid DeleteVertexBufferObjects();
 
         // renders the geometry
-        GLboolean Render(GLenum render_mode = GL_TRIANGLES) const;
+        GLboolean Render(GLenum render_mode = GL_TRIANGLES,GLboolean renderTextures=false) const;
+        GLboolean bindTextureImage(FIBITMAP * content,BYTE * data);
 
         // updates all vertex buffer objects
         GLboolean UpdateVertexBufferObjects(GLenum usage_flag = GL_STATIC_DRAW);

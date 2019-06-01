@@ -1017,7 +1017,20 @@ namespace cagd{
     updatePatchForRendering(_patches[firstId]);
     updatePatchForRendering(_patches[secondId]);
   }
-
+  FREE_IMAGE_FORMAT HyperbolicCompositePatch3::GetFileFormat(const char * filename) {
+          FREE_IMAGE_FORMAT fif = FreeImage_GetFileType(filename, 0);
+          if (fif == FIF_UNKNOWN) {
+                  fif = FreeImage_GetFIFFromFilename(filename);
+          }
+          return(fif);
+  }
+  FIBITMAP * HyperbolicCompositePatch3::GetFileContent(FREE_IMAGE_FORMAT fif, const char * filename) {
+          FIBITMAP * image = 0;
+          if (FreeImage_FIFSupportsReading(fif)) {
+                  image = FreeImage_Load(fif, filename);
+          }
+          return(image);
+  }
 void HyperbolicCompositePatch3::renderAll(){
   if(sphere->_image){
       glEnable(GL_LIGHTING);
@@ -1046,11 +1059,19 @@ void HyperbolicCompositePatch3::renderAll(){
           glEnable(GL_LIGHTING);
           glEnable(GL_LIGHT0);
           glEnable(GL_NORMALIZE);
-          _patches[i]->material.Apply();
-          _patches[i]->img->Render();
-          glDisable(GL_LIGHTING);
-          glDisable(GL_LIGHT0);
-          glDisable(GL_NORMALIZE);
+
+          if(!_patches[i]->renderTexture){
+            _patches[i]->material.Apply();
+            }else{              
+              glColor3f(1,1,1.0f);
+              glDisable(GL_LIGHTING);
+              glDisable(GL_LIGHT0);
+              glDisable(GL_NORMALIZE);
+            }
+          _patches[i]->img->Render(GL_TRIANGLES,_patches[i]->renderTexture);          
+            glDisable(GL_LIGHTING);
+            glDisable(GL_LIGHT0);
+            glDisable(GL_NORMALIZE);
           //render u,v isoparametric lines
            glColor3f(0.2f,0.6f,0.6f);
           if(_patches[i]->ulines){

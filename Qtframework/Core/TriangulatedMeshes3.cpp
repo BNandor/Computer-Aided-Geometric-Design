@@ -4,40 +4,19 @@
 #include <limits>
 #include <algorithm>
 #include "TriangulatedMeshes3.h"
-#include "Texture/FreeImage.h"
+
 
 using namespace cagd;
 using namespace std;
-FREE_IMAGE_FORMAT GetFileFormat(const char * filename) {
-	FREE_IMAGE_FORMAT fif = FreeImage_GetFileType(filename, 0);
-	if (fif == FIF_UNKNOWN) {
-		fif = FreeImage_GetFIFFromFilename(filename);
-	}
-	return(fif);
-}
-FIBITMAP * GetFileContent(FREE_IMAGE_FORMAT fif, const char * filename) {
-	FIBITMAP * image = 0;
-	if (FreeImage_FIFSupportsReading(fif)) {
-		image = FreeImage_Load(fif, filename);
-	}
-	return(image);
-}
 TriangulatedMesh3::TriangulatedMesh3(GLuint vertex_count, GLuint face_count, GLenum usage_flag):
 	_usage_flag(usage_flag),
 	_vbo_vertices(0), _vbo_normals(0), _vbo_tex_coordinates(0), _vbo_indices(0),
 	_vertex(vertex_count), _normal(vertex_count), _tex(vertex_count),
 	_face(face_count)
 {
-  FREE_IMAGE_FORMAT ext = GetFileFormat(textureImage);
-  if (ext == FIF_UNKNOWN) {
-          throw("Invalid Texture File Format!");
-  }
-  FIBITMAP * content = GetFileContent(ext, textureImage);
-  if (!content) {
-          throw("Invalid Texture File Content!");
-  }
-  BYTE * data = FreeImage_GetBits(content);
+}
 
+GLboolean TriangulatedMesh3::bindTextureImage(FIBITMAP * content,BYTE * data){
   height = FreeImage_GetHeight(content);
   width = FreeImage_GetWidth(content);
 
@@ -45,6 +24,10 @@ TriangulatedMesh3::TriangulatedMesh3(GLuint vertex_count, GLuint face_count, GLe
   GLenum format = (internal == 4) ? GL_BGRA : GL_BGR;
   GLenum type = GL_UNSIGNED_BYTE;
 
+  if(texture){
+    glDeleteTextures(1,&texture);
+    texture=0;
+  }
   glGenTextures(1, &texture);
   glBindTexture(GL_TEXTURE_2D, texture);
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP);
@@ -53,7 +36,7 @@ TriangulatedMesh3::TriangulatedMesh3(GLuint vertex_count, GLuint face_count, GLe
   glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
   glTexImage2D(GL_TEXTURE_2D, 0, internal, width, height, 0, format, type, data);
 
-  FreeImage_Unload(content);
+  return GL_TRUE;
 }
 
 TriangulatedMesh3::TriangulatedMesh3(const TriangulatedMesh3 &mesh):
@@ -116,7 +99,7 @@ GLvoid TriangulatedMesh3::DeleteVertexBufferObjects()
     // homework: delete vertex buffer objects of unit normal vectors, texture coordinates, and indices
 }
 
-GLboolean TriangulatedMesh3::Render(GLenum render_mode) const
+GLboolean TriangulatedMesh3::Render(GLenum render_mode,GLboolean renderTexture) const
 {
     if (!_vbo_vertices || !_vbo_normals || !_vbo_tex_coordinates || !_vbo_indices)
         return GL_FALSE;
@@ -146,7 +129,12 @@ GLboolean TriangulatedMesh3::Render(GLenum render_mode) const
 
         // activate the element array buffer for indexed vertices of triangular faces
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, _vbo_indices);
-
+        if(renderTexture && texture){
+          glEnable(GL_TEXTURE_2D);
+          glBindTexture(GL_TEXTURE_2D, texture);
+        }else{
+          glDisable(GL_TEXTURE_2D);
+        }
         // render primitives
         glDrawElements(render_mode, 3 * (GLsizei)_face.size(), GL_UNSIGNED_INT, (const GLvoid *)0);
 
@@ -156,8 +144,7 @@ GLboolean TriangulatedMesh3::Render(GLenum render_mode) const
     glDisableClientState(GL_NORMAL_ARRAY);
     glDisableClientState(GL_TEXTURE_COORD_ARRAY);
     //mine
-    glEnable(GL_TEXTURE_2D);
-    glBindTexture(GL_TEXTURE_2D, texture);
+
     //eof mine
     // unbind any buffer object previously bound and restore client memory usage
     // for these buffer object targets
